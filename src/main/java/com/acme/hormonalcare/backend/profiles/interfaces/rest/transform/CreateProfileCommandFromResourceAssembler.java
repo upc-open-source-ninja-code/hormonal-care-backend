@@ -1,7 +1,7 @@
 package com.acme.hormonalcare.backend.profiles.interfaces.rest.transform;
 
-import com.acme.center.platform.profiles.domain.model.commands.CreateProfileCommand;
-import com.acme.center.platform.profiles.interfaces.rest.resources.CreateProfileResource;
+import com.acme.hormonalcare.backend.profiles.domain.model.commands.CreateProfileCommand;
+import com.acme.hormonalcare.backend.profiles.interfaces.rest.resources.CreateProfileResource;
 
 public class CreateProfileCommandFromResourceAssembler {
     public static CreateProfileCommand toCommandFromResource(CreateProfileResource resource) {
