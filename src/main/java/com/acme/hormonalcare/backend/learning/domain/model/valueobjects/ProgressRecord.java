@@ -1,7 +1,7 @@
 package com.acme.hormonalcare.backend.learning.domain.model.valueobjects;
 
-import com.acme.center.platform.learning.domain.model.aggregates.Enrollment;
-import com.acme.center.platform.learning.domain.model.entities.ProgressRecordItem;
+import com.acme.hormonalcare.backend.learning.domain.model.aggregates.Enrollment;
+import com.acme.hormonalcare.backend.learning.domain.model.entities.ProgressRecordItem;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
