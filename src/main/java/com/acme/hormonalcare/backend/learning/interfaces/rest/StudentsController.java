@@ -1,13 +1,13 @@
 package com.acme.hormonalcare.backend.learning.interfaces.rest;
 
-import com.acme.center.platform.learning.domain.model.queries.GetStudentByAcmeStudentRecordIdQuery;
-import com.acme.center.platform.learning.domain.model.valueobjects.AcmeStudentRecordId;
-import com.acme.center.platform.learning.domain.services.StudentCommandService;
-import com.acme.center.platform.learning.domain.services.StudentQueryService;
-import com.acme.center.platform.learning.interfaces.rest.resources.CreateStudentResource;
-import com.acme.center.platform.learning.interfaces.rest.resources.StudentResource;
-import com.acme.center.platform.learning.interfaces.rest.transform.CreateStudentCommandFromResourceAssembler;
-import com.acme.center.platform.learning.interfaces.rest.transform.StudentResourceFromEntityAssembler;
+import com.acme.hormonalcare.backend.learning.domain.model.queries.GetStudentByAcmeStudentRecordIdQuery;
+import com.acme.hormonalcare.backend.learning.domain.model.valueobjects.AcmeStudentRecordId;
+import com.acme.hormonalcare.backend.learning.domain.services.StudentCommandService;
+import com.acme.hormonalcare.backend.learning.domain.services.StudentQueryService;
+import com.acme.hormonalcare.backend.learning.interfaces.rest.resources.CreateStudentResource;
+import com.acme.hormonalcare.backend.learning.interfaces.rest.resources.StudentResource;
+import com.acme.hormonalcare.backend.learning.interfaces.rest.transform.CreateStudentCommandFromResourceAssembler;
+import com.acme.hormonalcare.backend.learning.interfaces.rest.transform.StudentResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
