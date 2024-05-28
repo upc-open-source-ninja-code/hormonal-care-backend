@@ -1,7 +1,7 @@
 package com.acme.hormonalcare.backend.learning.domain.model.valueobjects;
 
-import com.acme.center.platform.learning.domain.model.aggregates.Course;
-import com.acme.center.platform.learning.domain.model.entities.LearningPathItem;
+import com.acme.hormonalcare.backend.learning.domain.model.aggregates.Course;
+import com.acme.hormonalcare.backend.learning.domain.model.entities.LearningPathItem;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
