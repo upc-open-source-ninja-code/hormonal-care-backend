@@ -10,12 +10,14 @@ import jakarta.persistence.*;
 @Entity
 public class Profile extends AuditableAbstractAggregateRoot<Profile> {
 
+
     @Embedded
     private PersonName name;
 
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "address", column = @Column(name = "email_address"))})
+
     private EmailAddress email;
 
     @Embedded
@@ -27,10 +29,16 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
             @AttributeOverride(name = "country", column = @Column(name = "address_country"))})
     private StreetAddress address;
 
-    public Profile(String firstName, String lastName, String email, String street, String number, String city, String postalCode, String country) {
+    @Embedded
+    private String gender;
+    private String image;
+    private  String phone;
+
+    public Profile(String firstName, String lastName, String email, String street, String number, String city, String postalCode, String country, String gender, String image ) {
         this.name = new PersonName(firstName, lastName);
         this.email = new EmailAddress(email);
         this.address = new StreetAddress(street, number, city, postalCode, country);
+
     }
 
     public Profile() {
@@ -40,6 +48,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.name = new PersonName(command.firstName(), command.lastName());
         this.email = new EmailAddress(command.email());
         this.address = new StreetAddress(command.street(), command.number(), command.city(), command.postalCode(), command.country());
+
     }
 
     public void updateName(String firstName, String lastName) {
@@ -61,6 +70,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     public String getEmailAddress() {
         return email.address();
     }
+
 
     public String getStreetAddress() {
         return address.getAddress();
