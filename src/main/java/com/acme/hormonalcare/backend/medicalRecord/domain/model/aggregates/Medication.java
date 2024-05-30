@@ -1,15 +1,15 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
-import com.acme.hormonalcare.backend.profiles.domain.model.commands.CreateProfileCommand;
-import com.acme.hormonalcare.backend.profiles.domain.model.valueobjects.EmailAddress;
-import com.acme.hormonalcare.backend.profiles.domain.model.valueobjects.PersonName;
-import com.acme.hormonalcare.backend.profiles.domain.model.valueobjects.StreetAddress;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 import jakarta.persistence.*;
 @Entity
-public class medication extends AuditableAbstractAggregateRoot<medication> {
+public class Medication extends AuditableAbstractAggregateRoot<Medication> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "medical_record_id")
