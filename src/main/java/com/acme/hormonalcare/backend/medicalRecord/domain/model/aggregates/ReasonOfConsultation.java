@@ -2,9 +2,14 @@ package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateReasonOfConsultationCommand;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import jakarta.persistence.Entity;
+import lombok.Getter;
 
+@Getter
+@Entity
 public class ReasonOfConsultation extends AuditableAbstractAggregateRoot<ReasonOfConsultation> {
     private String description;
+
     private String symptoms;
 
     public ReasonOfConsultation() {
@@ -19,4 +24,13 @@ public class ReasonOfConsultation extends AuditableAbstractAggregateRoot<ReasonO
         this.description = command.description();
         this.symptoms = command.symptoms();
     }
+
+    public void updateDescription (String description) {
+        this.description = description;
+    }
+
+    public void updateSymptoms (String symptoms) {
+        this.symptoms = symptoms;
+    }
+
 }
