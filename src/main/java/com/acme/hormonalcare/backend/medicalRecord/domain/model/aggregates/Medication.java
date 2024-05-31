@@ -1,5 +1,8 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
@@ -11,9 +14,9 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+   // @ManyToOne
     @JoinColumn(name = "medical_record_id")
-    private MedicalRecord medicalRecord;
+    private Long medicalRecord;
 
     @ManyToOne
     @JoinColumn(name = "prescription_id")
@@ -38,23 +41,22 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     @Embedded
     private Duration duration;
 
+    public  Medication() {
+    }
 
     public Medication(CreateMedicationCommand command) {
-        this.medicalRecord = command.getMedicalRecord();
-        this.prescription = command.getPrescription();
-        this.medicationType = command.getMedicationType();
-        this.drugName = new DrugName(command.getDrugName());
-        this.quantity = new Quantity(command.getAmount(), command.getUnit());
-        this.concentration = new Concentration(command.getValue(), command.getConcentrationUnit());
-        this.frequency = new Frequency(command.getTimesPerDay());
-        this.duration = new Duration(command.getDuration());
+        this.medicalRecord = command.medicalRecord();
+        this.prescription = command.prescription();
+        this.medicationType = command.medicationType();
+        this.drugName = new DrugName(command.drugName().name());
+        this.quantity = new Quantity(command.quantity().amount(), command.quantity().unit());
+        this.concentration = new Concentration(command.concentration().value(), command.concentration().unit());
+        this.frequency = new Frequency(command.frequency().timesPerDay());
+        this.duration = new Duration(command.duration().timePeriod());
     }
 
-    public medication() {
 
-    }
-
-    public medication(MedicalRecord medicalRecord, Prescription prescription, MedicationType medicationType, DrugName drugName, Quantity quantity, Concentration concentration, Frequency frequency, Duration duration) {
+    public Medication(Long medicalRecord, Prescription prescription, MedicationType medicationType, DrugName drugName, Quantity quantity, Concentration concentration, Frequency frequency, Duration duration) {
         this.medicalRecord = medicalRecord;
         this.prescription = prescription;
         this.medicationType = medicationType;
@@ -65,7 +67,6 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.duration = duration;
     }
 
-    // Métodos de actualización
     public void updateDrugName(String drugName) {
         this.drugName = new DrugName(drugName);
     }
@@ -87,27 +88,23 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     }
 
     public String getDrugName() {
-        return drugName.getDrugName();
+        return drugName.name();
     }
 
     public int getAmount() {
-        return quantity.getAmount();
+        return quantity.amount();
     }
     public String getUnit() {
-        return quantity.getUnit();
+        return quantity.unit();
     }
     public int getValue() {
-        return concentration.getValue();
+        return concentration.value();
     }
-    public String getConcentrationUnit() {
-        return concentration.getConcentrationUnit();
-    }
+    public String getConcentrationUnit() {return concentration.unit();}
     public int getTimesPerDay() {
-        return frequency.getTimesPerDay();
+        return frequency.timesPerDay();
     }
-    public String getDuration() {
-        return duration.getTimePeriod();
-    }
+    public String getDuration() {return duration.timePeriod();}
 
 }
 
