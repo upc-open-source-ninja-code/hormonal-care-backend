@@ -12,5 +12,5 @@ public interface MedicationQueryService {
     List<Medication> handle(GetMedicationsByMedicalRecordIdQuery query);
     List<Medication> handle(GetMedicationsByPrescriptionIdQuery query);
     List<Medication> handle(GetMedicationsByTypeIdQuery query);
-
+    List<Medication> handle(GetMedicationByDrugNameQuery query);
 }
