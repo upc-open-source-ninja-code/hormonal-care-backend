@@ -14,9 +14,9 @@ public class Prescription extends AuditableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    //@ManyToOne
     @JoinColumn(name = "medical_record_id")
-    private MedicalRecord medicalRecord;
+    private Long medicalRecord;
 
     @Getter
     private Date prescriptionDate;
@@ -32,7 +32,7 @@ public class Prescription extends AuditableModel {
     public Prescription() {
     }
 
-    public Prescription(MedicalRecord medicalRecord, Date prescriptionDate, Long doctorId, Long patientId, String notes) {
+    public Prescription(Long medicalRecord, Date prescriptionDate, Long doctorId, Long patientId, String notes) {
         this.medicalRecord = medicalRecord;
         this.prescriptionDate = prescriptionDate;
         this.doctorId = doctorId;

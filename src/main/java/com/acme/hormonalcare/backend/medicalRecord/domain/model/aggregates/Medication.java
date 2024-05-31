@@ -91,19 +91,22 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         return drugName.name();
     }
 
-    public int getAmount() {
-        return quantity.amount();
-    }
+    public int getAmount() {return quantity.amount();}
+
     public String getUnit() {
         return quantity.unit();
     }
+
     public int getValue() {
         return concentration.value();
     }
+
     public String getConcentrationUnit() {return concentration.unit();}
+
     public int getTimesPerDay() {
         return frequency.timesPerDay();
     }
+
     public String getDuration() {return duration.timePeriod();}
 
 }
