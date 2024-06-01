@@ -7,6 +7,8 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 @Entity
 public class Medication extends AuditableAbstractAggregateRoot<Medication> {
 
@@ -15,13 +17,14 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     private Long id;
 
    // @ManyToOne
+    @Getter
     @JoinColumn(name = "medical_record_id")
     private Long medicalRecord;
-
+    @Getter
     @ManyToOne
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
-
+    @Getter
     @ManyToOne
     @JoinColumn(name = "medication_type_id")
     private MedicationType medicationType;
@@ -49,7 +52,7 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.prescription = command.prescription();
         this.medicationType = command.medicationType();
         this.drugName = new DrugName(command.drugName().name());
-        this.quantity = new Quantity(command.quantity().amount(), command.quantity().unit());
+        this.quantity = new Quantity(command.quantity().amount(), command.quantity().unitQ());
         this.concentration = new Concentration(command.concentration().value(), command.concentration().unit());
         this.frequency = new Frequency(command.frequency().timesPerDay());
         this.duration = new Duration(command.duration().timePeriod());
@@ -87,14 +90,14 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.duration = new Duration(timePeriod);
     }
 
-    public String getDrugName() {
-        return drugName.name();
-    }
-
+    public String getDrugName() {return drugName.name();}
+    public String getQuantity() {return quantity.amount() + " " + quantity.unitQ();}
+   public String getConcentration() {return concentration.value() + " " + concentration.unit();}
+    public String getFrequency() {return frequency.timesPerDay() + " times per day";}
     public int getAmount() {return quantity.amount();}
 
     public String getUnit() {
-        return quantity.unit();
+        return quantity.unitQ();
     }
 
     public int getValue() {
@@ -110,5 +113,6 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     public String getDuration() {return duration.timePeriod();}
 
 }
+
 
 
