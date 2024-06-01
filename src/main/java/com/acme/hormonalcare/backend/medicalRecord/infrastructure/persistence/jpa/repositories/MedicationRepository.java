@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
 
-    Optional<Medication> findByDrugName(DrugName drugName);
+    List<Medication> findByDrugName(DrugName drugName);
     boolean existsMedicationByDrugName(DrugName drugName);
 
    //List<Medication> findByMedicalRecordId(Long medicalRecordId);

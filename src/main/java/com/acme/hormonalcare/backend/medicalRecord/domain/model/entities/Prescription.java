@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePrescriptionCommand;
 import com.acme.hormonalcare.backend.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -39,7 +40,13 @@ public class Prescription extends AuditableModel {
         this.patientId = patientId;
         this.notes = notes;
     }
-
+    public Prescription(CreatePrescriptionCommand command) {
+        this.medicalRecord = command.medicalRecord();
+        this.prescriptionDate = command.prescriptionDate();
+        this.doctorId = command.doctorId();
+        this.patientId = command.patientId();
+        this.notes = command.notes();
+    }
     public void updateNotes(String notes) {
         this.notes = notes;
     }

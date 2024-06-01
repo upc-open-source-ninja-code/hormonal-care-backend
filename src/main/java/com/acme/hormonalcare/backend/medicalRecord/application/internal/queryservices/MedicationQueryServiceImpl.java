@@ -27,10 +27,10 @@ public class MedicationQueryServiceImpl implements MedicationQueryService {
         return medicationRepository.findById(query.id());
     }
 
-    @Override
+   /* @Override
     public List<Medication> handle(GetMedicationsByMedicalRecordIdQuery query) {
         return medicationRepository.findByMedicalRecordId(query.medicalRecordId());
-    }
+    }*/
 
     @Override
     public List<Medication> handle(GetMedicationsByPrescriptionIdQuery query) {
