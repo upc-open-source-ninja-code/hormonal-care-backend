@@ -48,4 +48,7 @@ public class Prescription extends AuditableModel {
     }
 
 
+    public Long getMedicalRecord() {
+        return medicalRecord;
+    }
 }

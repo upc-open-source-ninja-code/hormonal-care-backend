@@ -5,14 +5,16 @@ import com.acme.hormonalcare.backend.shared.domain.model.entities.AuditableModel
 import jakarta.persistence.*;
 import lombok.Getter;
 
+
 @Entity
 public class MedicationType extends AuditableModel {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
+
     private String typeName;
 
     public MedicationType() {
@@ -26,4 +28,7 @@ public class MedicationType extends AuditableModel {
         this.typeName = typeName;
     }
 
+    public String getName() {
+        return typeName;
+    }
 }
