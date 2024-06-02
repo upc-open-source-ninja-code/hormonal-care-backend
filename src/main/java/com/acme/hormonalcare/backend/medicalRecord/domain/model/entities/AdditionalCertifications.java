@@ -1,14 +1,14 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class PhotoProfile{
+@Setter
+public class AdditionalCertifications {
     private String url;
 
-    public PhotoProfile(String url) {
-
+    public AdditionalCertifications(String url) {
         this.url = url;
     }
-
 }
