@@ -25,12 +25,10 @@ public class ReasonOfConsultation extends AuditableAbstractAggregateRoot<ReasonO
         this.symptoms = command.symptoms();
     }
 
-    public void updateDescription (String description) {
+    public ReasonOfConsultation updateInformation (String description, String symptoms) {
         this.description = description;
-    }
-
-    public void updateSymptoms (String symptoms) {
         this.symptoms = symptoms;
+        return this;
     }
 
 }
