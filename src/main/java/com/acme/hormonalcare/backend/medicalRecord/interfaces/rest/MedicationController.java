@@ -1,8 +1,5 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationTypeCommand;
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePrescriptionCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.*;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.*;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.*;

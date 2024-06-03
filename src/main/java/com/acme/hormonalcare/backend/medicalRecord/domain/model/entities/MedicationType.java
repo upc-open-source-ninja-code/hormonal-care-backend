@@ -23,13 +23,8 @@ public class MedicationType extends AuditableModel {
     public MedicationType(CreateMedicationTypeCommand command) {
         this.typeName = command.typeName();
     }
-    public MedicationType(String typeName) {
-        this.typeName = typeName;
-    }
 
-    public void updateTypeName(String typeName) {
-        this.typeName = typeName;
-    }
+    public void updateTypeName(String typeName) {this.typeName = typeName;}
 
     public String getName() {
         return typeName;

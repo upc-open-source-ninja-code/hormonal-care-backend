@@ -4,9 +4,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Medicat
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
 
 public record CreateMedicationResource(
-        Long medicalRecord,
-        Prescription prescriptionId,
-        MedicationType medicationTypeId,
+
         String name,
         int amount,
         String unitQ,

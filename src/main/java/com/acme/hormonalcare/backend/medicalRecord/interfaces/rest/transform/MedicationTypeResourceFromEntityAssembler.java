@@ -5,6 +5,6 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Med
 
 public class MedicationTypeResourceFromEntityAssembler {
     public static MedicationTypeResource toResourceFromEntity(MedicationType entity) {
-        return new MedicationTypeResource(entity.getId(), entity.getName());
+        return new MedicationTypeResource(entity.getName());
     }
 }

@@ -14,15 +14,8 @@ import java.util.Optional;
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
 
     Optional<Medication> findByDrugName(DrugName drugName);
-    boolean existsByDrugName(DrugName drugName);
-
    //List<Medication> findByMedicalRecordId(Long medicalRecordId);
     //boolean existsMedicationByMedicalRecordId(Long medicalRecordId);
-
     Optional<Medication> findByPrescriptionId(Long prescriptionId);
-    boolean existsByPrescriptionId(Long prescriptionId);
-
     Optional<Medication> findByMedicationTypeId(Long typeId);
-    boolean existsByMedicationTypeId(Long typeId);
-
 }

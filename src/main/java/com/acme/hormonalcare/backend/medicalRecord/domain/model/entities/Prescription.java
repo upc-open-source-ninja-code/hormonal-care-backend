@@ -6,28 +6,31 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Date;
-
+@Getter
 @Entity
 public class Prescription extends AuditableModel {
 
-    @Getter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //@ManyToOne
+
     @JoinColumn(name = "medical_record_id")
     private Long medicalRecord;
 
-    @Getter
-    private Date prescriptionDate;
-    @Getter
-    @Column (nullable = false)
+
+    //@Column (nullable = false)
+    @JoinColumn(name = "doctor_id")
     private Long doctorId;
-    @Getter
-    @Column (nullable = false)
+
+
+    //@Column (nullable = false)
+    @JoinColumn(name = "patient_id")
     private Long patientId;
-    @Getter
+
+    private Date prescriptionDate;
     private String notes;
 
     public Prescription() {
@@ -41,21 +44,12 @@ public class Prescription extends AuditableModel {
         this.notes = notes;
     }
     public Prescription(CreatePrescriptionCommand command) {
-        this.medicalRecord = command.medicalRecord();
+        //this.medicalRecord = command.medicalRecord();
         this.prescriptionDate = command.prescriptionDate();
-        this.doctorId = command.doctorId();
-        this.patientId = command.patientId();
+        //this.doctorId = command.doctorId();
+        //this.patientId = command.patientId();
         this.notes = command.notes();
     }
-    public void updateNotes(String notes) {
-        this.notes = notes;
-    }
-    public void updatePrescriptionDate(Date prescriptionDate) {
-        this.prescriptionDate = prescriptionDate;
-    }
 
 
-    public Long getMedicalRecord() {
-        return medicalRecord;
-    }
 }

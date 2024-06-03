@@ -6,26 +6,26 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescri
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
-@Getter
+
 @Entity
 public class Medication extends AuditableAbstractAggregateRoot<Medication> {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     // @ManyToOne
-
+    @Getter
     @JoinColumn(name = "medical_record_id")
     private Long medicalRecord;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "medication_type_id")
     private MedicationType medicationType;
@@ -49,9 +49,9 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     }
 
     public Medication(CreateMedicationCommand command) {
-        this.medicalRecord = command.medicalRecordId();
-        this.prescription = command.prescriptionId();
-        this.medicationType = command.medicationTypeId();
+        //this.medicalRecord = command.medicalRecordId();
+        //this.prescription = command.prescriptionId();
+        //this.medicationType = command.medicationTypeId();
         this.drugName = new DrugName(command.name());
         this.quantity = new Quantity(command.amount(), command.unitQ());
         this.concentration = new Concentration(command.value(), command.unit());
@@ -69,26 +69,6 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.concentration = concentration;
         this.frequency = frequency;
         this.duration = duration;
-    }
-
-    public void updateDrugName(String drugName) {
-        this.drugName = new DrugName(drugName);
-    }
-
-    public void updateQuantity(int amount, String unit) {
-        this.quantity = new Quantity(amount, unit);
-    }
-
-    public void updateConcentration(int value, String unit) {
-        this.concentration = new Concentration(value, unit);
-    }
-
-    public void updateFrequency(int timesPerDay) {
-        this.frequency = new Frequency(timesPerDay);
-    }
-
-    public void updateDuration(String timePeriod) {
-        this.duration = new Duration(timePeriod);
     }
 
 
