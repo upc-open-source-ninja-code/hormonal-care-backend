@@ -1,5 +1,3 @@
-
-
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/medications", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/medical-record/medications", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Medications", description = "Medication Management Endpoints")
 public class MedicationController {
     private final MedicationCommandService medicationCommandService;
@@ -38,7 +36,8 @@ public class MedicationController {
         this.prescriptionCommandService = prescriptionCommandService;
         this.prescriptionQueryService = prescriptionQueryService;
     }
-@PostMapping
+
+    @PostMapping
     public ResponseEntity<MedicationResource> createMedication(@RequestBody CreateMedicationResource resource) {
         var createMedicationCommand = CreateMedicationCommandFromResourceAssembler.toCommandFromResource(resource);
         var medication = medicationCommandService.handle(createMedicationCommand);
@@ -65,6 +64,7 @@ public class MedicationController {
                 .toList();
         return ResponseEntity.ok(medicationResources);
     }
+
     @PostMapping("/medicationTypes")
     public ResponseEntity<MedicationTypeResource> createMedicationType(@RequestBody CreateMedicationTypeResource resource) {
         var createMedicationTypeCommand = CreateMedicationTypeCommandFromResourceAssembler.toCommandFromResource(resource);

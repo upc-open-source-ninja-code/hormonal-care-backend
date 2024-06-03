@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface MedicationTypeRepository extends JpaRepository<MedicationType, Long> {
-    Optional<MedicationType> findById(Long medicationTypeId);
+
 }

@@ -8,23 +8,24 @@ import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbs
 
 import jakarta.persistence.*;
 import lombok.Getter;
-
+@Getter
 @Entity
 public class Medication extends AuditableAbstractAggregateRoot<Medication> {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   // @ManyToOne
-    @Getter
+    // @ManyToOne
+
     @JoinColumn(name = "medical_record_id")
     private Long medicalRecord;
-    @Getter
+
     @ManyToOne
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
-    @Getter
+
     @ManyToOne
     @JoinColumn(name = "medication_type_id")
     private MedicationType medicationType;
@@ -44,18 +45,18 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     @Embedded
     private Duration duration;
 
-    public  Medication() {
+    public Medication() {
     }
 
     public Medication(CreateMedicationCommand command) {
-        this.medicalRecord = command.medicalRecord();
-        this.prescription = command.prescription();
-        this.medicationType = command.medicationType();
-        this.drugName = new DrugName(command.drugName().name());
-        this.quantity = new Quantity(command.quantity().amount(), command.quantity().unitQ());
-        this.concentration = new Concentration(command.concentration().value(), command.concentration().unit());
-        this.frequency = new Frequency(command.frequency().timesPerDay());
-        this.duration = new Duration(command.duration().timePeriod());
+        this.medicalRecord = command.medicalRecordId();
+        this.prescription = command.prescriptionId();
+        this.medicationType = command.medicationTypeId();
+        this.drugName = new DrugName(command.name());
+        this.quantity = new Quantity(command.amount(), command.unitQ());
+        this.concentration = new Concentration(command.value(), command.unit());
+        this.frequency = new Frequency(command.timesPerDay());
+        this.duration = new Duration(command.timePeriod());
     }
 
 
@@ -90,29 +91,15 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.duration = new Duration(timePeriod);
     }
 
-    public String getDrugName() {return drugName.name();}
-    public String getQuantity() {return quantity.amount() + " " + quantity.unitQ();}
-   public String getConcentration() {return concentration.value() + " " + concentration.unit();}
-    public String getFrequency() {return frequency.timesPerDay() + " times per day";}
-    public int getAmount() {return quantity.amount();}
 
-    public String getUnit() {
-        return quantity.unitQ();
-    }
-
-    public int getValue() {
-        return concentration.value();
-    }
-
-    public String getConcentrationUnit() {return concentration.unit();}
-
-    public int getTimesPerDay() {
-        return frequency.timesPerDay();
-    }
-
-    public String getDuration() {return duration.timePeriod();}
+      public String getDrugName() {return drugName.name();}
+      public String getQuantity() {return quantity.amount() + " " + quantity.unitQ();}
+     public String getConcentration() {return concentration.value() + " " + concentration.unit();}
+      public String getFrequency() {return frequency.timesPerDay() + " times per day";}
+      public String getDuration() {return duration.timePeriod();}
 
 }
+
 
 
 

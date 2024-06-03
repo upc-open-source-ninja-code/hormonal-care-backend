@@ -33,17 +33,17 @@ public class MedicationQueryServiceImpl implements MedicationQueryService {
     }*/
 
     @Override
-    public List<Medication> handle(GetMedicationsByPrescriptionIdQuery query) {
+    public Optional<Medication> handle(GetMedicationsByPrescriptionIdQuery query) {
         return medicationRepository.findByPrescriptionId(query.prescriptionId());
     }
 
     @Override
-    public List<Medication> handle(GetMedicationsByTypeIdQuery query) {
+    public Optional<Medication> handle(GetMedicationsByTypeIdQuery query) {
         return medicationRepository.findByMedicationTypeId(query.medicationTypeId());
     }
 
     @Override
-    public List<Medication> handle(GetMedicationByDrugNameQuery query) {
+    public Optional<Medication> handle(GetMedicationByDrugNameQuery query) {
         return medicationRepository.findByDrugName(query.drugName());
     }
 }
