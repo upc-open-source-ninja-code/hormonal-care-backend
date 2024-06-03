@@ -1,4 +1,4 @@
-package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
+/*package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
 
 import com.acme.hormonalcare.backend.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
@@ -48,4 +48,4 @@ public class Prescription extends AuditableModel {
     }
 
 
-}
+}*/

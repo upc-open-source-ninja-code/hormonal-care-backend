@@ -1,4 +1,4 @@
-package com.acme.hormonalcare.backend.medicalRecord.domain.services;
+/*package com.acme.hormonalcare.backend.medicalRecord.domain.services;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Medication;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.*;
@@ -13,4 +13,4 @@ public interface MedicationQueryService {
     List<Medication> handle(GetMedicationsByPrescriptionIdQuery query);
     List<Medication> handle(GetMedicationsByTypeIdQuery query);
 
-}
+}*/

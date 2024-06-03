@@ -1,4 +1,4 @@
-package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
+/*package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
@@ -106,6 +106,6 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     }
     public String getDuration() {return duration.timePeriod();}
 
-}
+}*/
 
 
