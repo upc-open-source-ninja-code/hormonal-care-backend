@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicalExamCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateReasonOfConsultationCommand;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ public class MedicalExam extends AuditableAbstractAggregateRoot<ReasonOfConsulta
     public MedicalExam(String name) {
         this.name = name;
     }
-    public MedicalExam(CreateReasonOfConsultationCommand command) {
+    public MedicalExam(CreateMedicalExamCommand command) {
         this.name = command.name();
     }
 
