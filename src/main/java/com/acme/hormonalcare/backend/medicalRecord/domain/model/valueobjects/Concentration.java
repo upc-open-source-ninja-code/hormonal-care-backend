@@ -3,12 +3,12 @@ package com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record Concentration(int value, String unit) {
+public record Concentration(int value_concentration, String unit_concentration) {
     public Concentration {
-        if (value <= 0) {
+        if (value_concentration <= 0) {
             throw new IllegalArgumentException("Concentration value must be greater than zero");
         }
-        if (unit == null || unit.isBlank()) {
+        if (unit_concentration == null || unit_concentration.isBlank()) {
             throw new IllegalArgumentException("Unit cannot be null or empty");
         }
     }
