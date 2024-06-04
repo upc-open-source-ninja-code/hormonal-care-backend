@@ -1,4 +1,4 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
-public record TypeExamResource() {
+public record TypeExamResource(String name) {
 }
