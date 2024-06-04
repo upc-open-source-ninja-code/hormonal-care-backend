@@ -3,13 +3,13 @@ package com.acme.hormonalcare.backend.medicalRecord.application.internal.command
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.TypeExam;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateTypeExamCommand;
-import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamCommandService;
+import com.acme.hormonalcare.backend.medicalRecord.domain.services.TypeExamCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.TypeExamRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
 @Service
-public class TypeExamCommandServiceImpl implements MedicalExamCommandService {
+public class TypeExamCommandServiceImpl implements TypeExamCommandService {
     private final TypeExamRepository typeExamRepository;
 
     public TypeExamCommandServiceImpl(TypeExamRepository typeExamRepository) {

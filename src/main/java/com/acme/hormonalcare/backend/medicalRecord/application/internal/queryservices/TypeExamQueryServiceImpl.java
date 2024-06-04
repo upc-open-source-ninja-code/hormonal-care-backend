@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class TypeExamQueryServiceImpl {
+public class TypeExamQueryServiceImpl implements TypeExamQueryService {
     private final TypeExamRepository typeExamRepository;
 
     public TypeExamQueryServiceImpl(TypeExamRepository typeExamRepository) {
