@@ -29,12 +29,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
             @AttributeOverride(name = "country", column = @Column(name = "address_country"))})
     private StreetAddress address;
 
-    @Embedded
-    private String gender;
-    private String image;
-    private  String phone;
-
-    public Profile(String firstName, String lastName, String email, String street, String number, String city, String postalCode, String country, String gender, String image ) {
+    public Profile(String firstName, String lastName, String email, String street, String number, String city, String postalCode, String country ) {
         this.name = new PersonName(firstName, lastName);
         this.email = new EmailAddress(email);
         this.address = new StreetAddress(street, number, city, postalCode, country);

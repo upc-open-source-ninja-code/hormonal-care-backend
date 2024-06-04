@@ -12,3 +12,4 @@ import java.util.Optional;
 public interface MedicationTypeRepository extends JpaRepository<MedicationType, Long> {
 
 }
+

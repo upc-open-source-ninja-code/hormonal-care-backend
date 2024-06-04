@@ -16,6 +16,6 @@ public interface MedicationRepository extends JpaRepository<Medication, Long> {
     Optional<Medication> findByDrugName(DrugName drugName);
    //List<Medication> findByMedicalRecordId(Long medicalRecordId);
     //boolean existsMedicationByMedicalRecordId(Long medicalRecordId);
-    Optional<Medication> findByPrescriptionId(Long prescriptionId);
-    Optional<Medication> findByMedicationTypeId(Long typeId);
+   //Optional<Medication> findByPrescriptionId(Long prescriptionId);
+   //Optional<Medication> findByMedicationTypeId(Long typeId);
 }

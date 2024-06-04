@@ -5,3 +5,4 @@ import java.util.Date;
 public record CreatePrescriptionResource(
         Date prescriptionDate,
         String notes) { }
+

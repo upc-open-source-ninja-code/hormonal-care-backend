@@ -4,7 +4,6 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.*;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.*;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.*;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.transform.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/medical-record/medications", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Medications", description = "Medication Management Endpoints")
 public class MedicationController {
     private final MedicationCommandService medicationCommandService;
     private final MedicationQueryService medicationQueryService;
@@ -23,9 +21,7 @@ public class MedicationController {
     private final PrescriptionCommandService prescriptionCommandService;
     private final PrescriptionQueryService prescriptionQueryService;
 
-    public MedicationController(MedicationCommandService medicationCommandService, MedicationQueryService medicationQueryService,
-                                MedicationTypeCommandService medicationTypeCommandService, MedicationTypeQueryService medicationTypeQueryService,
-                                PrescriptionCommandService prescriptionCommandService, PrescriptionQueryService prescriptionQueryService) {
+    public MedicationController(MedicationCommandService medicationCommandService, MedicationQueryService medicationQueryService, MedicationTypeCommandService medicationTypeCommandService, MedicationTypeQueryService medicationTypeQueryService, PrescriptionCommandService prescriptionCommandService, PrescriptionQueryService prescriptionQueryService) {
         this.medicationCommandService = medicationCommandService;
         this.medicationQueryService = medicationQueryService;
         this.medicationTypeCommandService = medicationTypeCommandService;
@@ -61,6 +57,15 @@ public class MedicationController {
                 .toList();
         return ResponseEntity.ok(medicationResources);
     }
+/*
+    @PutMapping("/{medicationId}")
+    public ResponseEntity<MedicationResource> updateMedication(@PathVariable Long medicationId, @RequestBody UpdateMedicationResource updateMedicationResource) {
+        var updateMedicationCommand = UpdateMedicationCommandFromResourceAssembler.toCommandFromResource(medicationId, updateMedicationResource);
+        var updatedMedication = medicationCommandService.handle(updateMedicationCommand);
+        if (updatedMedication.isEmpty()) return ResponseEntity.badRequest().build();
+        var medicationResource = MedicationResourceFromEntityAssembler.toResourceFromEntity(updatedMedication.get());
+        return ResponseEntity.ok(medicationResource);
+    }*/
 
     @PostMapping("/medicationTypes")
     public ResponseEntity<MedicationTypeResource> createMedicationType(@RequestBody CreateMedicationTypeResource resource) {
@@ -98,5 +103,22 @@ public class MedicationController {
                 .map(PrescriptionResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(prescriptionResources);
+    }
+    @GetMapping("/medicationTypes/{medicationTypeId}")
+    public ResponseEntity<MedicationTypeResource> getMedicationTypeById(@PathVariable Long medicationTypeId) {
+        var getMedicationTypeByIdQuery = new GetMedicationTypeByIdQuery(medicationTypeId);
+        var medicationType = medicationTypeQueryService.handle(getMedicationTypeByIdQuery);
+        if (medicationType.isEmpty()) return ResponseEntity.notFound().build();
+        var medicationTypeResource = MedicationTypeResourceFromEntityAssembler.toResourceFromEntity(medicationType.get());
+        return ResponseEntity.ok(medicationTypeResource);
+    }
+
+    @GetMapping("/prescriptions/{prescriptionId}")
+    public ResponseEntity<PrescriptionResource> getPrescriptionById(@PathVariable Long prescriptionId) {
+        var getPrescriptionByIdQuery = new GetPrescriptionByIdQuery(prescriptionId);
+        var prescription = prescriptionQueryService.handle(getPrescriptionByIdQuery);
+        if (prescription.isEmpty()) return ResponseEntity.notFound().build();
+        var prescriptionResource = PrescriptionResourceFromEntityAssembler.toResourceFromEntity(prescription.get());
+        return ResponseEntity.ok(prescriptionResource);
     }
 }

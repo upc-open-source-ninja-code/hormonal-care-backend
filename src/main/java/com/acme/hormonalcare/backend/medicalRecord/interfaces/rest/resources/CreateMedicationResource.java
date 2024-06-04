@@ -1,7 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
+//import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
+//import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
 
 public record CreateMedicationResource(
 
@@ -11,4 +11,6 @@ public record CreateMedicationResource(
         int value,
         String unit,
         int timesPerDay,
-        String timePeriod) { }
+        String timePeriod
+) { }
+
