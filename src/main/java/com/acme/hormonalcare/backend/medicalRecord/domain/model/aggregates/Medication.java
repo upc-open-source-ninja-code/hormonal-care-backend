@@ -1,15 +1,14 @@
-/*package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
+package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
 //import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
 //import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
-import com.acme.hormonalcare.backend.profiles.domain.model.valueobjects.StreetAddress;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 import jakarta.persistence.*;
-//import jakarta.persistence.JoinColumn;
-//import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 @Getter
 @Entity
@@ -92,7 +91,7 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
       public String getFrequency() {return frequency.timesPerDay() + " times per day";}
       public String getDuration() {return duration.timePeriod();}
 
-}*/
+}
 
 
 
