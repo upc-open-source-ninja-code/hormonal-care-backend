@@ -1,4 +1,4 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.queries;
 
-public record GetMedicalExamByIdQuery() {
+public record GetMedicalExamByIdQuery(Long id) {
 }
