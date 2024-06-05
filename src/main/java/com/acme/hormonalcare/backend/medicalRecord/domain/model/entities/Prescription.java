@@ -15,19 +15,14 @@ public class Prescription extends AuditableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@ManyToOne
-
-    @JoinColumn(name = "medical_record_id")
-    private Long medicalRecord;
-
 
     //@Column (nullable = false)
-    @JoinColumn(name = "doctor_id")
+    @JoinColumn(name = "doctor_id",referencedColumnName = "id")
     private Long doctorId;
 
 
     //@Column (nullable = false)
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id",referencedColumnName = "id")
     private Long patientId;
 
     private Date prescriptionDate;
@@ -36,18 +31,14 @@ public class Prescription extends AuditableModel {
     public Prescription() {
     }
 
-    public Prescription(Long medicalRecord, Date prescriptionDate, Long doctorId, Long patientId, String notes) {
-        this.medicalRecord = medicalRecord;
+    public Prescription( Date prescriptionDate, Long doctorId, Long patientId, String notes) {
         this.prescriptionDate = prescriptionDate;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.notes = notes;
     }
     public Prescription(CreatePrescriptionCommand command) {
-        //this.medicalRecord = command.medicalRecord();
         this.prescriptionDate = command.prescriptionDate();
-        //this.doctorId = command.doctorId();
-        //this.patientId = command.patientId();
         this.notes = command.notes();
     }
 

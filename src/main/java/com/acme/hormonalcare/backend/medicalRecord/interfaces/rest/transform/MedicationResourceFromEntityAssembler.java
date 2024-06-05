@@ -6,9 +6,8 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Med
 public class MedicationResourceFromEntityAssembler {
     public static MedicationResource toResourceFromEntity(Medication entity) {
         return new MedicationResource(
-                //entity.getMedicalRecord(),
-                //entity.getPrescription().getId(),
-                //entity.getMedicationType().getId(),
+                entity.getPrescription().getId(),
+                entity.getMedicationType().getId(),
                 entity.getId(),
                 entity.getDrugName(),
                 entity.getQuantity(),

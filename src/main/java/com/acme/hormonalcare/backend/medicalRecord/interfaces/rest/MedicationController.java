@@ -39,6 +39,16 @@ public class MedicationController {
         return new ResponseEntity<>(medicationResource, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{medicationId}")
+    public ResponseEntity<MedicationResource> updateMedication(@PathVariable Long medicationId, @RequestBody UpdateMedicationResource updateMedicationResource) {
+        var updateMedicationCommand = UpdateMedicationCommandFromResourceAssembler.toCommandFromResource(medicationId, updateMedicationResource);
+        var updatedMedication = medicationCommandService.handle(updateMedicationCommand);
+        if (updatedMedication.isEmpty()) return ResponseEntity.badRequest().build();
+        var medicationResource = MedicationResourceFromEntityAssembler.toResourceFromEntity(updatedMedication.get());
+        return ResponseEntity.ok(medicationResource);
+    }
+
+
     @GetMapping("/{medicationId}")
     public ResponseEntity<MedicationResource> getMedicationById(@PathVariable Long medicationId) {
         var getMedicationByIdQuery = new GetMedicationByIdQuery(medicationId);
@@ -57,15 +67,7 @@ public class MedicationController {
                 .toList();
         return ResponseEntity.ok(medicationResources);
     }
-/*
-    @PutMapping("/{medicationId}")
-    public ResponseEntity<MedicationResource> updateMedication(@PathVariable Long medicationId, @RequestBody UpdateMedicationResource updateMedicationResource) {
-        var updateMedicationCommand = UpdateMedicationCommandFromResourceAssembler.toCommandFromResource(medicationId, updateMedicationResource);
-        var updatedMedication = medicationCommandService.handle(updateMedicationCommand);
-        if (updatedMedication.isEmpty()) return ResponseEntity.badRequest().build();
-        var medicationResource = MedicationResourceFromEntityAssembler.toResourceFromEntity(updatedMedication.get());
-        return ResponseEntity.ok(medicationResource);
-    }*/
+
 
     @PostMapping("/medicationTypes")
     public ResponseEntity<MedicationTypeResource> createMedicationType(@RequestBody CreateMedicationTypeResource resource) {

@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.application.internal.commandservices;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateMedicationTypeCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationTypeCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicationTypeCommandService;
@@ -21,5 +22,10 @@ public class MedicationTypeCommandServiceImpl implements MedicationTypeCommandSe
         var medicationType = new MedicationType(command);
         medicationTypeRepository.save(medicationType);
         return Optional.of(medicationType);
+    }
+
+    @Override
+    public Optional<MedicationType> handle(UpdateMedicationTypeCommand command) {
+        return Optional.empty();
     }
 }

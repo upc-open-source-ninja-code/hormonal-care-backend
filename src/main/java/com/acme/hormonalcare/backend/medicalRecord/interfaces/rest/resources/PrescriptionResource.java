@@ -4,9 +4,8 @@ import java.util.Date;
 
 public record PrescriptionResource(
         Long id,
-        Long medicalRecord,
-        Date prescriptionDate,
         Long doctorId,
         Long patientId,
+        Date prescriptionDate,
         String notes) {
 }

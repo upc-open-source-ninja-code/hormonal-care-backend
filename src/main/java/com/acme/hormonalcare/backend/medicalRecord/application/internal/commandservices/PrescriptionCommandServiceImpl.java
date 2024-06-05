@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.application.internal.commandservices;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdatePrescriptionCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.Prescription;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePrescriptionCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PrescriptionCommandService;
@@ -21,5 +22,10 @@ public class PrescriptionCommandServiceImpl implements PrescriptionCommandServic
         var prescription = new Prescription(command);
         prescriptionRepository.save(prescription);
         return Optional.of(prescription);
+    }
+
+    @Override
+    public Optional<Prescription> handle(UpdatePrescriptionCommand command) {
+        return Optional.empty();
     }
 }
