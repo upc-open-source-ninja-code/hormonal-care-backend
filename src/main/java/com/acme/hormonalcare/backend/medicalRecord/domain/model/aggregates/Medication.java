@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicalExamCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateMedicationCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
@@ -58,14 +59,15 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     public Medication() {
     }
 
-    public Medication(CreateMedicationCommand command) {
+    public Medication(CreateMedicationCommand command, Prescription prescription, MedicationType medicationType) {
         this.drugName = new DrugName(command.name());
         this.quantity = new Quantity(command.amount(), command.unitQ());
         this.concentration = new Concentration(command.value(), command.unit());
         this.frequency = new Frequency(command.timesPerDay());
         this.duration = new Duration(command.timePeriod());
+        this.prescription = prescription;
+        this.medicationType = medicationType;
     }
-
 
     public Medication( Prescription prescriptionId, MedicationType medicationTypeId, String name, int amount, String unitQ, int value_concentration, String unit_concentration, int timesPerDay, String timePeriod) {
         this.prescription= prescriptionId;
