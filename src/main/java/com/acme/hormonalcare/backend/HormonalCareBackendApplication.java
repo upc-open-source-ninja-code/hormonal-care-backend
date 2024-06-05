@@ -15,6 +15,7 @@ public class HormonalCareBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(HormonalCareBackendApplication.class, args);
     }
+    /*
     @Configuration
     public static class Myconfiguration{
         @Bean
@@ -27,5 +28,5 @@ public class HormonalCareBackendApplication {
                 }
             };
         }
-    }
+    }*/
 }
