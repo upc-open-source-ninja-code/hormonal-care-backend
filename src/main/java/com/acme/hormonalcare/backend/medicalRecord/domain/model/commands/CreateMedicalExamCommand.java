@@ -1,4 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.commands;
 
-public record CreateMedicalExamCommand(String name) {
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.TypeExam;
+
+public record CreateMedicalExamCommand(String name, TypeExam typeExamId) {
 }
