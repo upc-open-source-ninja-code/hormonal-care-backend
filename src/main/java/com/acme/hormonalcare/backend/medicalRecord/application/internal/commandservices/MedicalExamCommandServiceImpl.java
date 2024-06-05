@@ -2,9 +2,11 @@ package com.acme.hormonalcare.backend.medicalRecord.application.internal.command
 
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.MedicalExam;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.TypeExam;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicalExamCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.MedicalExamRepository;
+import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.TypeExamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,14 +14,17 @@ import java.util.Optional;
 public class MedicalExamCommandServiceImpl implements MedicalExamCommandService {
 
     private final MedicalExamRepository medicalExamRepository;
+    private final TypeExamRepository typeExamRepository;
 
-    public MedicalExamCommandServiceImpl(MedicalExamRepository medicalExamRepository) {
+    public MedicalExamCommandServiceImpl(MedicalExamRepository medicalExamRepository, TypeExamRepository typeExamRepository) {
         this.medicalExamRepository = medicalExamRepository;
+        this.typeExamRepository = typeExamRepository;
     }
 
     @Override
     public Optional<MedicalExam> handle(CreateMedicalExamCommand command) {
-        var medicalExam = new MedicalExam(command);
+        TypeExam typeExam = typeExamRepository.findById(command.typeExamId()).orElseThrow(() -> new RuntimeException("TypeExam no encontrado"));
+        var medicalExam = new MedicalExam(command, typeExam);
         medicalExamRepository.save(medicalExam);
         return Optional.of(medicalExam);
     }
