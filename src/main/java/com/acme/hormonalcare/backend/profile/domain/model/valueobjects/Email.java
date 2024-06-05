@@ -12,7 +12,5 @@ public record Email(String email) {
             throw new IllegalArgumentException("Email cannot be null or blank");
         }
     }
-    public String getEmail(){
-        return email;
-    }
+
 }

@@ -3,6 +3,7 @@ package com.acme.hormonalcare.backend.profile.domain.model.aggregates;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.CreateProfileCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Getter;
 public class Profile extends AuditableAbstractAggregateRoot<Profile> {
 
     @Embedded
+    @Column()
     private PersonName name;
 
     @Embedded
@@ -21,9 +23,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     private Gender gender;
 
 
-    @Embedded
     private String phoneNumber;
-
 
     @Embedded
     private Email email;
@@ -31,9 +31,8 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     @Embedded
     private Birthday birthday;
 
-    @Embedded
-    private String Image;
 
+    private String Image;
 
     public Profile(PersonName name, Age age, Gender gender, String phoneNumber, Email email, Birthday birthday, String Image) {
         this.name = name;
@@ -65,7 +64,4 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         return this;
     }
 
-    public String getPhoneNumber() {
-        return this.phoneNumber;
-    }
 }

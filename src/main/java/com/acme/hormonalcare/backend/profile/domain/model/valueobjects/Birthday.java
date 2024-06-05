@@ -16,7 +16,5 @@ public record Birthday(Date birthday) {
         }
     }
 
-    public String getBirthday() {
-        return birthday.toString();
-    }
+
 }

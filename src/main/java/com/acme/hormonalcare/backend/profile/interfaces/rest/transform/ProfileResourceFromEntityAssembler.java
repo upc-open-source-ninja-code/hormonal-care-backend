@@ -7,23 +7,12 @@ public class ProfileResourceFromEntityAssembler {
     public static ProfileResource toResourceFromEntity(Profile entity){
         return new ProfileResource(
                 entity.getName().getFullName(),
-                entity.getAge().getAge(),
                 entity.getGender().getGender(),
-                entity.getPhoneNumber().getPhoneNumber(),
-                entity.getEmail().getEmail(),
-                entity.getBirthday().getBirthday(),
-                entity.getImage()
+                entity.getAge().age(),
+                entity.getPhoneNumber(),
+                entity.getEmail().email(),
+                entity.getImage(),
+                entity.getBirthday().birthday()
         );
     }
 }
-
-/*
-String firstName,
-        String lastName,
-        String gender,
-        Integer age,
-        String phoneNumber,
-        String email,
-        String Image,
-        Date birthday)
- */

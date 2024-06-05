@@ -14,7 +14,5 @@ public record Age(Integer age) {
         }
     }
 
-    public String getAge() {
-        return age.toString();
-    }
+
 }

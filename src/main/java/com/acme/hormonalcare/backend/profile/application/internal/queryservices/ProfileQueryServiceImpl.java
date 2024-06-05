@@ -7,10 +7,11 @@ import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileById
 import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByNameQuery;
 import com.acme.hormonalcare.backend.profile.domain.services.ProfileQueryService;
 import com.acme.hormonalcare.backend.profile.infrastructure.persistence.jpa.repositories.ProfileRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProfileQueryServiceImpl implements ProfileQueryService {
     private final ProfileRepository profileRepository;
 
