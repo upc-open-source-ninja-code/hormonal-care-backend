@@ -7,7 +7,8 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Cre
 public class CreateMedicalExamCommandFromResourceAssembler {
     public static CreateMedicalExamCommand toCommandFromResource(CreateMedicalExamResource resource) {
         return new CreateMedicalExamCommand(
-                resource.name()
+                resource.name(),
+                resource.typeExamId()
         );
     }
 }
