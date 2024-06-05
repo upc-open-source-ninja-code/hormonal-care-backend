@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class TypeExam extends AuditableAbstractAggregateRoot<ReasonOfConsultation> {
+public class TypeExam extends AuditableAbstractAggregateRoot<TypeExam> {
     private String name;
 
     public TypeExam() {
