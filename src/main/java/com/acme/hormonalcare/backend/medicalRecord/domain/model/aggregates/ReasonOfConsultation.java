@@ -13,6 +13,8 @@ public class ReasonOfConsultation extends AuditableAbstractAggregateRoot<ReasonO
     private String symptoms;
 
     public ReasonOfConsultation() {
+        this.description = "";
+        this.symptoms = "";
     }
 
     public ReasonOfConsultation(String description, String symptoms) {
