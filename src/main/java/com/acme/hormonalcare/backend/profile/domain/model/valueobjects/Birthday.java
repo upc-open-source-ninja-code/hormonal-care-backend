@@ -15,4 +15,8 @@ public record Birthday(Date birthday) {
             throw new IllegalArgumentException("Birthday cannot be null");
         }
     }
+
+    public String getBirthday() {
+        return birthday.toString();
+    }
 }

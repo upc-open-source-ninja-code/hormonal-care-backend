@@ -13,4 +13,7 @@ public record Gender(String gender) {
             throw new IllegalArgumentException("Gender must be 'Male' or 'Female'");
         }
     }
+    public String getGender(){
+        return gender;
+    }
 }

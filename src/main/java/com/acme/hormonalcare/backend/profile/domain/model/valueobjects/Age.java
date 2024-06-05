@@ -13,4 +13,8 @@ public record Age(Integer age) {
             throw new IllegalArgumentException("Age must be greater than 18");
         }
     }
+
+    public String getAge() {
+        return age.toString();
+    }
 }
