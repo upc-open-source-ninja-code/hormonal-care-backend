@@ -20,6 +20,8 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     @Embedded
     private Gender gender;
 
+
+    @Embedded
     private String phoneNumber;
 
 
@@ -63,4 +65,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         return this;
     }
 
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
 }
