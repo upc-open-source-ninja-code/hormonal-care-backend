@@ -27,7 +27,9 @@ public class MedicalExam extends AuditableAbstractAggregateRoot<MedicalExam> {
         this.name = command.name();
         this.typeExam = typeExam;
     }
-
-
-
+    public MedicalExam updateInformation(String name, TypeExam typeExam) {
+        this.name = name;
+        this.typeExam = typeExam;
+        return this;
+    }
 }
