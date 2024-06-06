@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
-@RequestMapping(value="/api/v1/medical-record/medical-exam/type-exam", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/api/v1/medical-record/patient", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PatientController {
     private final PatientCommandService patientCommandService;
     private final PatientQueryService patientQueryService;

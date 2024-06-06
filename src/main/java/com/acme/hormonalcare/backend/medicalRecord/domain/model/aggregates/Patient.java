@@ -11,11 +11,14 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
     private String typeofblood;
 
     public Patient() {
+        this.typeofblood = "";
     }
     public Patient(String typeofblood) {
+
         this.typeofblood = typeofblood;
     }
     public Patient(CreatePatientCommand command) {
+
         this.typeofblood = command.typeofblood();
     }
     public Patient updateInformation(String typeofblood) {

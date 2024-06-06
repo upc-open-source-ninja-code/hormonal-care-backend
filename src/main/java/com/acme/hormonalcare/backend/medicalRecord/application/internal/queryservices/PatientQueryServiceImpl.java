@@ -17,6 +17,7 @@ public class PatientQueryServiceImpl implements PatientQueryService {
 
     @Override
     public Optional<Patient> handle(GetPatientByIdQuery query) {
+
         return patientRepository.findById(query.id());
     }
 }
