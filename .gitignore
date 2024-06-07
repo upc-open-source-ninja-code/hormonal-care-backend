@@ -31,9 +31,3 @@
 ### VS Code ###
 .vscode/
 
-
-
-# Archivos fuente relevantes
-# Asegúrate de incluir todos los archivos fuente relevantes
-# para tu aplicación Spring Boot
-/src/
