@@ -3,8 +3,7 @@ package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicalAppointmentCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -14,10 +13,18 @@ import java.time.LocalDate;
 public class MedicalAppointment extends AuditableAbstractAggregateRoot<MedicalAppointment> {
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "date", column = @Column(name = "event_date")) })
     private EventDate eventDate;
+
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "time", column = @Column(name = "start_time")) })
     private StartTime startTime;
+
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "time", column = @Column(name = "end_time")) })
     private EndTime endTime;
 
     private String title;
@@ -25,8 +32,13 @@ public class MedicalAppointment extends AuditableAbstractAggregateRoot<MedicalAp
     private String description;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "email", column = @Column(name = "patientEmail")) })
     private PatientEmail patientEmail;
+
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "email", column = @Column(name = "doctorEmail")) })
     private DoctorEmail doctorEmail;
 
     public MedicalAppointment() {
