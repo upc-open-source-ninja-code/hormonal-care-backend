@@ -1,6 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePrescriptionCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdatePrescriptionCommand;
 import com.acme.hormonalcare.backend.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,6 +41,12 @@ public class Prescription extends AuditableModel {
     public Prescription(CreatePrescriptionCommand command) {
         this.prescriptionDate = command.prescriptionDate();
         this.notes = command.notes();
+    }
+
+    public Prescription updateInformation(UpdatePrescriptionCommand command) {
+        this.prescriptionDate = command.prescriptionDate();
+        this.notes = command.notes();
+        return this;
     }
 
 

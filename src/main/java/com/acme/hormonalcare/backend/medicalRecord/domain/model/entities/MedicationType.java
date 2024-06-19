@@ -2,9 +2,11 @@ package com.acme.hormonalcare.backend.medicalRecord.domain.model.entities;
 
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationTypeCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateMedicationTypeCommand;
 import com.acme.hormonalcare.backend.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.aspectj.bridge.ICommand;
 
 
 @Entity
@@ -24,7 +26,10 @@ public class MedicationType extends AuditableModel {
         this.typeName = command.typeName();
     }
 
-    public void updateTypeName(String typeName) {this.typeName = typeName;}
+    public MedicationType update(UpdateMedicationTypeCommand command){
+    this.typeName =command.typeName();
+    return this;
+    }
 
     public String getName() {
         return typeName;

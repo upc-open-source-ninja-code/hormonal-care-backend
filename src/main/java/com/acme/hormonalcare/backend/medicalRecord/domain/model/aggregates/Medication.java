@@ -91,7 +91,7 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
       public String getFrequency() {return frequency.timesPerDay() + " times per day";}
       public String getDuration() {return duration.timePeriod();}
 
-    public void update(UpdateMedicationCommand command, MedicalRecord medicalRecord, Prescription prescription, MedicationType medicationType) {
+    public Medication update(UpdateMedicationCommand command, MedicalRecord medicalRecord, Prescription prescription, MedicationType medicationType) {
         this.drugName = new DrugName(command.name());
         this.quantity = new Quantity(command.amount(), command.unitQ());
         this.concentration = new Concentration(command.value(), command.unit());
@@ -100,6 +100,7 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.prescription = prescription;
         this.medicationType = medicationType;
         this.medicalRecord = medicalRecord;
+        return this;
     }
 
     public void setPrescription(Prescription prescription) {
