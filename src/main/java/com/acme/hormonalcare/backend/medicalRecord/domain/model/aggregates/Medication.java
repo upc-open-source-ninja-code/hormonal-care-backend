@@ -1,6 +1,5 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates;
 
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicalExamCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateMedicationCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateMedicationCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.entities.MedicationType;
@@ -16,6 +15,10 @@ import lombok.Getter;
 @Entity
 public class Medication extends AuditableAbstractAggregateRoot<Medication> {
 
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "medicalRecord_id",referencedColumnName = "id" )
+    private MedicalRecord medicalRecord;
 
     @Getter
     @ManyToOne
@@ -59,7 +62,7 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
     public Medication() {
     }
 
-    public Medication(CreateMedicationCommand command, Prescription prescription, MedicationType medicationType) {
+    public Medication(CreateMedicationCommand command, MedicalRecord medicalRecord, Prescription prescription, MedicationType medicationType) {
         this.drugName = new DrugName(command.name());
         this.quantity = new Quantity(command.amount(), command.unitQ());
         this.concentration = new Concentration(command.value(), command.unit());
@@ -67,9 +70,11 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
         this.duration = new Duration(command.timePeriod());
         this.prescription = prescription;
         this.medicationType = medicationType;
+        this.medicalRecord = medicalRecord;
     }
 
-    public Medication( Prescription prescriptionId, MedicationType medicationTypeId, String name, int amount, String unitQ, int value_concentration, String unit_concentration, int timesPerDay, String timePeriod) {
+    public Medication( MedicalRecord medicalRecordId, Prescription prescriptionId, MedicationType medicationTypeId, String name, int amount, String unitQ, int value_concentration, String unit_concentration, int timesPerDay, String timePeriod) {
+       this.medicalRecord= medicalRecordId;
         this.prescription= prescriptionId;
         this.medicationType= medicationTypeId;
         this.drugName = new DrugName(name);
@@ -82,11 +87,19 @@ public class Medication extends AuditableAbstractAggregateRoot<Medication> {
 
       public String getDrugName() {return drugName.name();}
       public String getQuantity() {return quantity.amount() + " " + quantity.unitQ();}
-     public String getConcentration() {return concentration.value_concentration() + " " + concentration.unit_concentration();}
+      public String getConcentration() {return concentration.value_concentration() + " " + concentration.unit_concentration();}
       public String getFrequency() {return frequency.timesPerDay() + " times per day";}
       public String getDuration() {return duration.timePeriod();}
 
-    public void update(UpdateMedicationCommand command, Prescription prescription, MedicationType medicationType) {
+    public void update(UpdateMedicationCommand command, MedicalRecord medicalRecord, Prescription prescription, MedicationType medicationType) {
+        this.drugName = new DrugName(command.name());
+        this.quantity = new Quantity(command.amount(), command.unitQ());
+        this.concentration = new Concentration(command.value(), command.unit());
+        this.frequency = new Frequency(command.timesPerDay());
+        this.duration = new Duration(command.timePeriod());
+        this.prescription = prescription;
+        this.medicationType = medicationType;
+        this.medicalRecord = medicalRecord;
     }
 
     public void setPrescription(Prescription prescription) {

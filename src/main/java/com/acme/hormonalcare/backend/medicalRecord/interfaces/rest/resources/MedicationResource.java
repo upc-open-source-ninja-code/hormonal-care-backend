@@ -2,6 +2,7 @@ package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
 public record MedicationResource(
         Long id,
+        Long medicalRecordId,
         Long prescriptionId,
         Long medicationTypeId,
         String drugName,

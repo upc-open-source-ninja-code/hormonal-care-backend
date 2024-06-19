@@ -21,6 +21,7 @@ public class MedicationController {
     private final PrescriptionCommandService prescriptionCommandService;
     private final PrescriptionQueryService prescriptionQueryService;
 
+
     public MedicationController(MedicationCommandService medicationCommandService, MedicationQueryService medicationQueryService, MedicationTypeCommandService medicationTypeCommandService, MedicationTypeQueryService medicationTypeQueryService, PrescriptionCommandService prescriptionCommandService, PrescriptionQueryService prescriptionQueryService) {
         this.medicationCommandService = medicationCommandService;
         this.medicationQueryService = medicationQueryService;
