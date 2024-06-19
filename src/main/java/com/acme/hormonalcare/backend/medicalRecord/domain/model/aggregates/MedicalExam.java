@@ -16,18 +16,29 @@ public class MedicalExam extends AuditableAbstractAggregateRoot<MedicalExam> {
     @JoinColumn(name = "typeExam_id",referencedColumnName = "id" )
     private TypeExam typeExam;
 
+
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "medicalRecord_id",referencedColumnName = "id" )
+    private MedicalRecord medicalRecord;
+
+
     public MedicalExam() {
     }
     
-    public MedicalExam(String name, Long typeExam) {
+    public MedicalExam(String name, Long typeExam, Long medicalRecord) {
         this.name = name;
     }
 
-    public MedicalExam(CreateMedicalExamCommand command, TypeExam typeExam) {
+    public MedicalExam(CreateMedicalExamCommand command, TypeExam typeExam, MedicalRecord medicalRecord) {
         this.name = command.name();
         this.typeExam = typeExam;
+        this.medicalRecord = medicalRecord;
     }
-
-
-
+    public MedicalExam updateInformation(String name, TypeExam typeExam, MedicalRecord medicalRecord) {
+        this.name = name;
+        this.typeExam = typeExam;
+        this.medicalRecord = medicalRecord;
+        return this;
+    }
 }
