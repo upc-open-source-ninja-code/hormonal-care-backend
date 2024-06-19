@@ -8,7 +8,8 @@ public class MedicalExamResourceFromEntityAssembler {
     public static MedicalExamResource toResourceFromEntity(MedicalExam entity) {
         return new MedicalExamResource(
                 entity.getName(),
-                entity.getTypeExam().getId()
+                entity.getTypeExam().getId(),
+                entity.getMedicalRecord().getId()
         );
     }
 }

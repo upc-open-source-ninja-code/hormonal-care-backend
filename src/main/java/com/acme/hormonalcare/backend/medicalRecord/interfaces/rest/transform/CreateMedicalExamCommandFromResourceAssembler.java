@@ -8,7 +8,8 @@ public class CreateMedicalExamCommandFromResourceAssembler {
     public static CreateMedicalExamCommand toCommandFromResource(CreateMedicalExamResource resource) {
         return new CreateMedicalExamCommand(
                 resource.name(),
-                resource.typeExamId()
+                resource.typeExamId(),
+                resource.medicalRecordId()
         );
     }
 }
