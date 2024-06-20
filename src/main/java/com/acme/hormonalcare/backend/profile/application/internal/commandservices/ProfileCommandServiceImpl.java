@@ -4,6 +4,7 @@ import com.acme.hormonalcare.backend.profile.domain.model.aggregates.Profile;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.CreateProfileCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.UpdateProfileImageCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.UpdateProfilePhoneNumberCommand;
+import com.acme.hormonalcare.backend.profile.domain.model.valueobjects.Email;
 import com.acme.hormonalcare.backend.profile.domain.services.ProfileCommandService;
 import com.acme.hormonalcare.backend.profile.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     }
     @Override
     public Optional<Profile> handle(CreateProfileCommand command) {
+
+        Email email = new Email(command.email());
+        if (profileRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("Profile with email " + command.email() + " already exists");
+        }
+
         var profile = new Profile(command);
         profileRepository.save(profile);
         return Optional.of(profile);

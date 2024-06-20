@@ -11,16 +11,9 @@ public class DoctorResourceFromEntityAssembler {
             entity.getCertification().certification(),
             entity.getAppointmentFee(),
             entity.getSubscriptionId(),
-            entity.getProfileId().profileId()
+            entity.getProfileId(),
+                entity.getDoctorRecordId()
         );
     }
 }
 
-/*
-        String professionalIdentificationNumber,
-        String subSpecialty,
-        String certification,
-        String appointmentFee,
-        String subscriptionId,
-        Long profileId
- */
