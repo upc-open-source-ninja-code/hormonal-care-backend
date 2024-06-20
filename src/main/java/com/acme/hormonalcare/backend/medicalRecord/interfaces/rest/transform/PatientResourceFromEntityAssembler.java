@@ -6,6 +6,8 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Pat
 public class PatientResourceFromEntityAssembler {
     public static PatientResource toResourceFromEntity(Patient entity){
         return new PatientResource(
-                entity.getTypeofblood());
+                entity.getTypeofblood(),
+                entity.getPatientRecordId(),
+                entity.getProfileId());
     }
 }

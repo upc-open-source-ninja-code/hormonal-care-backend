@@ -6,6 +6,14 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Cre
 public class CreatePatientCommandFromResourceAssembler {
     public static CreatePatientCommand toCommandFromResource(CreatePatientResource resource){
         return new CreatePatientCommand(
+                resource.firstName(),
+                resource.lastName(),
+                resource.gender(),
+                resource.age(),
+                resource.phoneNumber(),
+                resource.email(),
+                resource.Image(),
+                resource.birthday(),
                 resource.typeofblood()
         );
     }

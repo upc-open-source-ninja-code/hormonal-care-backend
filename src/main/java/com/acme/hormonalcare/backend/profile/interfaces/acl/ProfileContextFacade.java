@@ -35,13 +35,13 @@ Date birthday
         return profile.get().getId();
     }
 
-    /*
+
     public Long fetchProfileIdByEmail(String email) {
         var getProfileByEmailQuery = new GetProfileByEmailQuery(new Email(email));
         var profile = profileQueryService.handle(getProfileByEmailQuery);
         if (profile.isEmpty()) return 0L;
         return profile.get().getId();
     }
-    */
+
 
 }
