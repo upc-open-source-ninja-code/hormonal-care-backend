@@ -4,8 +4,9 @@ public record DoctorResource(
         String professionalIdentificationNumber,
         String subSpecialty,
         String certification,
-        String appointmentFee,
-        String subscriptionId,
-        Long profileId
+        Long appointmentFee,
+        Long subscriptionId,
+        Long profileId,
+        String doctorRecordId
 ) {
 }

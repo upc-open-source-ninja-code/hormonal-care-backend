@@ -1,11 +1,20 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
+import java.util.Date;
+
 public record CreateDoctorResource(
+        String firstName,
+        String lastName,
+        String gender,
+        Integer age,
+        String phoneNumber,
+        String email,
+        String Image,
+        Date birthday,
         String professionalIdentificationNumber,
         String subSpecialty,
         String certification,
-        String appointmentFee,
-        String subscriptionId,
-        Long profileId
+        Long appointmentFee,
+        Long subscriptionId
 ) {
 }
