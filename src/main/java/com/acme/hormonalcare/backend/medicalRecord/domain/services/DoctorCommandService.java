@@ -11,4 +11,5 @@ public interface DoctorCommandService {
     Optional<Doctor> handle(CreateDoctorCommand command);
     Optional<Doctor> handle(UpdateDoctorAppointmentFeeCommand command);
     Optional<Doctor> handle(UpdateDoctorSubscriptionCommand command);
+
 }

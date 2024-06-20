@@ -12,4 +12,5 @@ public interface MedicationQueryService {
     Optional<Medication> handle(GetMedicationByDrugNameQuery query);
     Optional<Medication> handle(GetMedicationsByPrescriptionIdQuery query);
     Optional<Medication> handle(GetMedicationsByTypeIdQuery query);
+    Optional<Medication> handle(GetMedicationsByMedicalRecordIdQuery query);
 }

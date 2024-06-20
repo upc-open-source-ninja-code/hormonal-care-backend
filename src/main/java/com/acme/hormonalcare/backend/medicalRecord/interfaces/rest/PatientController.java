@@ -1,7 +1,9 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
-
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.PatientRecordId;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByPatientRecordIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.PatientRecordId;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreatePatientResource;
@@ -28,11 +30,37 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<PatientResource> createPatient(@RequestBody CreatePatientResource resource) {
         var createPatientCommand = CreatePatientCommandFromResourceAssembler.toCommandFromResource(resource);
-        var patient = patientCommandService.handle(createPatientCommand);
-        if (patient.isEmpty()) return ResponseEntity.badRequest().build();
-        var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
-        return new ResponseEntity<>(patientResource, HttpStatus.CREATED);
+        var optionalPatient = patientCommandService.handle(createPatientCommand);
+        if (optionalPatient.isPresent()) {
+            var patient = optionalPatient.get();
+            if (patient.getPatientRecordId().isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            var getPatientByPatientRecordIdQuery = new GetPatientByPatientRecordIdQuery(new PatientRecordId(patient.getPatientRecordId()));
+            var patientQueryResult = patientQueryService.handle(getPatientByPatientRecordIdQuery);
+            if (patientQueryResult.isEmpty()) return ResponseEntity.badRequest().build();
+            var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patientQueryResult.get());
+            return new ResponseEntity<>(patientResource, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
+
+
+
+
+    @GetMapping("/{patientRecordId}")
+    public ResponseEntity<PatientResource> getPatientByPatientRecordId(@PathVariable String patientRecordId) {
+        var PatientRecordId = new PatientRecordId(patientRecordId);
+        var getPatientByPatientRecordIdQuery = new GetPatientByPatientRecordIdQuery(PatientRecordId);
+        var patient = patientQueryService.handle(getPatientByPatientRecordIdQuery);
+        if (patient.isEmpty()) {return ResponseEntity.notFound().build();}
+        var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
+        return ResponseEntity.ok(patientResource);
+    }
+
 
     @GetMapping("/{patientId}")
     public ResponseEntity<PatientResource> getPatientById(@PathVariable Long patientId) {

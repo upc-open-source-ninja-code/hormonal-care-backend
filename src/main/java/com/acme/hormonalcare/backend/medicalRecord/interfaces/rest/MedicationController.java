@@ -21,6 +21,7 @@ public class MedicationController {
     private final PrescriptionCommandService prescriptionCommandService;
     private final PrescriptionQueryService prescriptionQueryService;
 
+
     public MedicationController(MedicationCommandService medicationCommandService, MedicationQueryService medicationQueryService, MedicationTypeCommandService medicationTypeCommandService, MedicationTypeQueryService medicationTypeQueryService, PrescriptionCommandService prescriptionCommandService, PrescriptionQueryService prescriptionQueryService) {
         this.medicationCommandService = medicationCommandService;
         this.medicationQueryService = medicationQueryService;
@@ -87,6 +88,14 @@ public class MedicationController {
                 .toList();
         return ResponseEntity.ok(medicationTypeResources);
     }
+    @PutMapping("/medicationTypes/{medicationTypeId}")
+    public ResponseEntity<MedicationTypeResource> updateMedicationType(@PathVariable Long medicationTypeId, @RequestBody UpdateMedicationTypeResource updateMedicationTypeResource) {
+        var updateMedicationTypeCommand = UpdateMedicationTypeCommandFromResourceAssembler.toCommandFromResource(medicationTypeId, updateMedicationTypeResource);
+        var updatedMedicationType = medicationTypeCommandService.handle(updateMedicationTypeCommand);
+        if (updatedMedicationType.isEmpty()) return ResponseEntity.badRequest().build();
+        var medicationTypeResource = MedicationTypeResourceFromEntityAssembler.toResourceFromEntity(updatedMedicationType.get());
+        return ResponseEntity.ok(medicationTypeResource);
+    }
 
     @PostMapping("/prescriptions")
     public ResponseEntity<PrescriptionResource> createPrescription(@RequestBody CreatePrescriptionResource resource) {
@@ -121,6 +130,15 @@ public class MedicationController {
         var prescription = prescriptionQueryService.handle(getPrescriptionByIdQuery);
         if (prescription.isEmpty()) return ResponseEntity.notFound().build();
         var prescriptionResource = PrescriptionResourceFromEntityAssembler.toResourceFromEntity(prescription.get());
+        return ResponseEntity.ok(prescriptionResource);
+    }
+
+    @PutMapping("/prescriptions/{prescriptionId}")
+    public ResponseEntity<PrescriptionResource> updatePrescription(@PathVariable Long prescriptionId, @RequestBody UpdatePrescriptionResource updatePrescriptionResource) {
+        var updatePrescriptionCommand = UpdatePrescriptionCommandFromResourceAssembler.toCommandFromResource(prescriptionId, updatePrescriptionResource);
+        var updatedPrescription = prescriptionCommandService.handle(updatePrescriptionCommand);
+        if (updatedPrescription.isEmpty()) return ResponseEntity.badRequest().build();
+        var prescriptionResource = PrescriptionResourceFromEntityAssembler.toResourceFromEntity(updatedPrescription.get());
         return ResponseEntity.ok(prescriptionResource);
     }
 }

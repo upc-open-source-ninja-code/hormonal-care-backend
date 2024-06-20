@@ -7,6 +7,7 @@ public class UpdateMedicationCommandFromResourceAssembler {
     public static UpdateMedicationCommand toCommandFromResource(Long id, UpdateMedicationResource resource) {
         return new UpdateMedicationCommand(
                 id,
+                resource.medicalRecordId(),
                 resource.prescriptionId(),
                 resource.medicationTypeId(),
                 resource.name(),

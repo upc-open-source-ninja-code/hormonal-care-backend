@@ -21,17 +21,34 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
     @Embedded
     private Certification certification;
 
-    private String appointmentFee;
+    private Long appointmentFee;
 
     @Embedded
     private CodeDoctor codeDoctor;
 
-    private String subscriptionId;
+    private Long subscriptionId;
 
     @Embedded
     private ProfileId profileId;
 
-    public Doctor(ProfessionalIdentificationNumber professionalIdentificationNumber, SubSpecialty subSpecialty, Certification certification, String appointmentFee, String subscriptionId, Long profileId) {
+    @Embedded
+    @Column(name = "doctorRecord_id")
+    private  DoctorRecordId doctorRecordId;
+
+
+    public Doctor() {
+
+    }
+
+
+    public Doctor(
+            ProfessionalIdentificationNumber professionalIdentificationNumber,
+            SubSpecialty subSpecialty,
+            Certification certification,
+            Long appointmentFee,
+            Long subscriptionId,
+            Long profileId
+    ) {
         this.professionalIdentificationNumber = professionalIdentificationNumber;
         this.subSpecialty = subSpecialty;
         this.certification = certification;
@@ -39,47 +56,60 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
         this.subscriptionId = subscriptionId;
         this.codeDoctor = new CodeDoctor(generateCodeDoctor());
         this.profileId = new ProfileId(profileId);
+        this.doctorRecordId = new DoctorRecordId();
     }
 
-    public Doctor(CreateDoctorCommand command){
+    public Doctor(
+            ProfessionalIdentificationNumber professionalIdentificationNumber,
+            SubSpecialty subSpecialty,
+            Certification certification,
+            Long appointmentFee,
+            Long subscriptionId,
+            ProfileId profileId
+    ) {
+        this.professionalIdentificationNumber = professionalIdentificationNumber;
+        this.subSpecialty = subSpecialty;
+        this.certification = certification;
+        this.appointmentFee = appointmentFee;
+        this.subscriptionId = subscriptionId;
+        this.codeDoctor = new CodeDoctor(generateCodeDoctor());
+        this.profileId = profileId;
+        this.doctorRecordId = new DoctorRecordId();
+    }
+
+    public Doctor(CreateDoctorCommand command, ProfileId profileId){
         this.professionalIdentificationNumber = new ProfessionalIdentificationNumber(command.professionalIdentificationNumber());
         this.subSpecialty = new SubSpecialty(command.subSpecialty());
         this.certification = new Certification(command.certification());
         this.appointmentFee = command.appointmentFee();
         this.subscriptionId = command.subscriptionId();
         this.codeDoctor = new CodeDoctor(generateCodeDoctor());
-        this.profileId = new ProfileId(command.profileId());
+        this.profileId =profileId;
+        this.doctorRecordId = new DoctorRecordId();
     }
 
-    public Doctor() {
-    }
 
-    public Doctor(Long profileId){
-        this();
-        this.profileId = new ProfileId(profileId);
-    }
-
-    public Doctor(ProfileId profileId){
-        this();
-        this.profileId = profileId;
-    }
-
-    public Doctor updateAppointmentFee(String appointmentFee){
+    public Doctor updateAppointmentFee(Long appointmentFee){
         this.appointmentFee = appointmentFee;
         return this;
     }
 
-    public Doctor updateSubscriptionId(String subscriptionId){
+    public Doctor updateSubscriptionId(Long subscriptionId){
         this.subscriptionId = subscriptionId;
         return this;
     }
-
-
 
     private String generateCodeDoctor(){
         return "D" + System.currentTimeMillis();
     }
 
+    public Long getProfileId() {
+        return this.profileId.profileId();
+    }
+
+    public  String getDoctorRecordId() {
+        return this.doctorRecordId.doctorRecordId();
+    }
 
 
 }

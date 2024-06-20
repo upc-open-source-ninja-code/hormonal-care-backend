@@ -26,6 +26,18 @@ public class PrescriptionCommandServiceImpl implements PrescriptionCommandServic
 
     @Override
     public Optional<Prescription> handle(UpdatePrescriptionCommand command) {
-        return Optional.empty();
+        var id = command.id();
+        if (!prescriptionRepository.existsById(id)) {
+            throw new IllegalArgumentException("Prescription with id " + command.id() + "does not exists");
+        }
+        var result = prescriptionRepository.findById(id);
+        var prescriptionToUpdate = result.get();
+        try {
+            var updatedPrescription = prescriptionRepository.save(prescriptionToUpdate.updateInformation(command));
+            return Optional.of(updatedPrescription);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating prescription: " + e.getMessage());
+        }
+
     }
 }

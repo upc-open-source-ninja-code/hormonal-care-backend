@@ -7,7 +7,8 @@ public class UpdateMedicalExamCommandFromResourceAssembler {
         return new UpdateMedicalExamCommand(
                 id,
                 resource.name(),
-                resource.typeExamId()
+                resource.typeExamId(),
+                resource.medicalRecordId()
         );
     }
 }

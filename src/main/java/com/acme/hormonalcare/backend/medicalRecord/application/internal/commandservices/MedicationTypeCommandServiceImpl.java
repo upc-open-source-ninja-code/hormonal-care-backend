@@ -26,6 +26,13 @@ public class MedicationTypeCommandServiceImpl implements MedicationTypeCommandSe
 
     @Override
     public Optional<MedicationType> handle(UpdateMedicationTypeCommand command) {
-        return Optional.empty();
+        var medicationType = medicationTypeRepository.findById(command.id());
+
+        if (medicationType.isEmpty()) {
+            return Optional.empty();
+        }
+        medicationType.get().update(command);
+        medicationTypeRepository.save(medicationType.get());
+        return Optional.of(medicationType.get());
     }
 }

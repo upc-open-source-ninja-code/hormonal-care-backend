@@ -7,6 +7,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateM
 public class CreateMedicationCommandFromResourceAssembler {
     public static CreateMedicationCommand toCommandFromResource(CreateMedicationResource resource) {
         return new CreateMedicationCommand(
+                resource.medicalRecordId(),
                 resource.medicalTypeId(),
                 resource.prescriptionId(),
                 resource.name(),

@@ -2,6 +2,8 @@ package com.acme.hormonalcare.backend.medicalRecord.application.internal.queryse
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Patient;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByPatientRecordIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByProfileIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.PatientRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,18 @@ public class PatientQueryServiceImpl implements PatientQueryService {
 
         return patientRepository.findById(query.id());
     }
+
+    @Override
+    public Optional<Patient> handle(GetPatientByProfileIdQuery query) {
+        return patientRepository.findByProfileId(query.profileId());
+    }
+
+    @Override
+    public Optional<Patient> handle(GetPatientByPatientRecordIdQuery query) {
+        return patientRepository.findByPatientRecordId(query.patientRecordId());
+    }
+
+
 }
 
 

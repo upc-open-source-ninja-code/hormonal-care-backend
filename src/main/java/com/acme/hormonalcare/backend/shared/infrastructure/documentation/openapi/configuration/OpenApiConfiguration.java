@@ -15,14 +15,14 @@ public class OpenApiConfiguration {
         var openApi = new OpenAPI();
         openApi
                 .info(new Info()
-                        .title("ACME Learning Platform API")
-                        .description("ACME Learning Platform application REST API documentation.")
+                        .title("ACME hormonal Care API")
+                        .description("ACME hormonal Care application REST API documentation.")
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0")
                                 .url("https://www.apache.org/licenses/LICENSE-2.0.html")))
                 .externalDocs(new ExternalDocumentation()
-                        .description("ACME Learning Platform Wiki Documentation")
-                        .url("https://acme-learning-platform.wiki.github.io/docs"));
+                        .description("ACME hormonal Care Wiki Documentation")
+                        .url("https://acme-hormonal-care.wiki.github.io/docs"));
         return openApi;
     }
 }

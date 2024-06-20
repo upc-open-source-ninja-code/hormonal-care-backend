@@ -1,4 +1,5 @@
 package com.acme.hormonalcare.backend.medicalRecord.application.internal.commandservices;
+import com.acme.hormonalcare.backend.medicalRecord.application.internal.outboundservices.acl.ExternalProfileService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Patient;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePatientCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdatePatientCommand;
@@ -10,14 +11,38 @@ import java.util.Optional;
 @Service
 public class PatientCommandServiceImpl implements PatientCommandService {
     private final PatientRepository patientRepository;
+    private final ExternalProfileService externalProfileService;
 
-    public PatientCommandServiceImpl(PatientRepository patientRepository) {
+    public PatientCommandServiceImpl(PatientRepository patientRepository, ExternalProfileService externalProfileService) {
         this.patientRepository = patientRepository;
+        this.externalProfileService = externalProfileService;
     }
 
     @Override
     public Optional<Patient> handle(CreatePatientCommand command) {
-        var patient = new Patient(command);
+
+        var profileId = externalProfileService.fetchProfileIdByEmail(command.email());
+        if (profileId.isEmpty()){
+            profileId = externalProfileService.createProfile(
+                    command.firstName(),
+                    command.lastName(),
+                    command.gender(),
+                    command.age(),
+                    command.phoneNumber(),
+                    command.email(),
+                    command.Image(),
+                    command.birthday());
+        } else{
+            patientRepository.findByProfileId(profileId.get()).ifPresent(patient -> {
+                throw new IllegalArgumentException("Patient already exists");
+            });
+
+        }
+        if (profileId.isEmpty()) throw new IllegalArgumentException("Unable to create profile");
+
+
+
+        var patient = new Patient(profileId.get(),command.typeofblood());
         patientRepository.save(patient);
         return Optional.of(patient);
     }

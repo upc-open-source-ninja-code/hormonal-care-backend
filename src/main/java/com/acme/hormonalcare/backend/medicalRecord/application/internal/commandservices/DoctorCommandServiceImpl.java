@@ -1,9 +1,13 @@
 package com.acme.hormonalcare.backend.medicalRecord.application.internal.commandservices;
 
+import com.acme.hormonalcare.backend.medicalRecord.application.internal.outboundservices.acl.ExternalProfileService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Doctor;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateDoctorCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateDoctorAppointmentFeeCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateDoctorSubscriptionCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.Certification;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.ProfessionalIdentificationNumber;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.SubSpecialty;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.DoctorCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.DoctorRepository;
 import org.springframework.stereotype.Service;
@@ -14,14 +18,41 @@ import java.util.Optional;
 public class DoctorCommandServiceImpl implements DoctorCommandService {
 
     private final DoctorRepository doctorRepository;
+    private final ExternalProfileService externalProfileService;
 
-    public DoctorCommandServiceImpl(DoctorRepository doctorRepository) {
+    public DoctorCommandServiceImpl(DoctorRepository doctorRepository, ExternalProfileService externalProfileService) {
         this.doctorRepository = doctorRepository;
+        this.externalProfileService = externalProfileService;
     }
 
     @Override
     public Optional<Doctor> handle(CreateDoctorCommand command) {
-        var doctor = new Doctor(command);
+        var profileId = externalProfileService.fetchProfileIdByEmail(command.email());
+        if (profileId.isEmpty()){
+            profileId = externalProfileService.createProfile(
+                    command.firstName(),
+                    command.lastName(),
+                    command.gender(),
+                    command.age(),
+                    command.phoneNumber(),
+                    command.email(),
+                    command.Image(),
+                    command.birthday());
+        } else{
+            doctorRepository.findByProfileId(profileId.get()).ifPresent(doctor -> {
+                throw new IllegalArgumentException("Doctor already exists");
+            });
+        }
+        if (profileId.isEmpty()) throw new IllegalArgumentException("Unable to create profile");
+
+        var doctor = new Doctor(
+                new ProfessionalIdentificationNumber(command.professionalIdentificationNumber()),
+                new SubSpecialty(command.subSpecialty()),
+                new Certification(command.certification()),
+                command.appointmentFee(),
+                command.subscriptionId(),
+                profileId.get()
+        );
         doctorRepository.save(doctor);
         return Optional.of(doctor);
     }
@@ -34,7 +65,7 @@ public class DoctorCommandServiceImpl implements DoctorCommandService {
         var result = doctorRepository.findById(id);
         var doctorToUpdate = result.get();
         try{
-            var updatedDoctor = doctorRepository.save(doctorToUpdate.updateSubscriptionId(command.appointmentFee()));
+            var updatedDoctor = doctorRepository.save(doctorToUpdate.updateAppointmentFee(command.appointmentFee()));
             return Optional.of(updatedDoctor);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error updating doctor with id "+ id);
@@ -59,26 +90,3 @@ public class DoctorCommandServiceImpl implements DoctorCommandService {
 }
 
 
-/*
-@Override
-    public Optional<Treatment> handle(CreateTreatmentCommand command) {
-        var treatment = new Treatment(command);
-        treatmentRepository.save(treatment);
-        return Optional.of(treatment);
-    }
-
-    @Override
-    public Optional<Treatment> handle(UpdateTreatmentCommand command) {
-        var id = command.id();
-        if (!treatmentRepository.existsById(id))
-            throw new IllegalArgumentException("Treatment with id "+ id +" does not exist");
-        var result = treatmentRepository.findById(id);
-        var treatmentToUpdate = result.get();
-        try{
-            var updatedTreatment = treatmentRepository.save(treatmentToUpdate.updateInformation(command.description()));
-            return Optional.of(updatedTreatment);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Error updating treatment with id "+ id);
-        }
-    }
- */
