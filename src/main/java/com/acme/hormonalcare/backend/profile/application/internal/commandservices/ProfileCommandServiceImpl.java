@@ -21,7 +21,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     public Optional<Profile> handle(CreateProfileCommand command) {
         var profile = new Profile(command);
         profileRepository.save(profile);
-        return Optional.empty();
+        return Optional.of(profile);
     }
 
     @Override

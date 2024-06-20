@@ -50,8 +50,11 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     public Profile(CreateProfileCommand command) {
         this.name = new PersonName(command.firstName(), command.lastName());
         this.age = new Age(command.age());
+        this.birthday = new Birthday(command.birthday());
         this.gender = new Gender(command.gender());
         this.phoneNumber = command.phoneNumber();
+        this.email = new Email(command.email());
+        this.Image = command.Image();
     }
 
     public Profile upsetPhoneNumber(String phoneNumber){
