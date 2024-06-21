@@ -11,8 +11,8 @@ public class CreateMedicalAppointmentCommandFromResourceAssembler {
                 resource.endTime(),
                 resource.title(),
                 resource.description(),
-                resource.doctorEmail(),
-                resource.patientEmail()
+                resource.doctorId(),
+                resource.patientId()
         );
     }
 }
