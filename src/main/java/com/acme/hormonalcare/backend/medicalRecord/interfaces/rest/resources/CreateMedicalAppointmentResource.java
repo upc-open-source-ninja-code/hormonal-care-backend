@@ -8,7 +8,7 @@ public record CreateMedicalAppointmentResource(
         String endTime,
         String title,
         String description,
-        String doctorEmail,
-        String patientEmail
+        Long doctorId,
+        Long patientId
 ) {
 }

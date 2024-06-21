@@ -4,6 +4,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Medic
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetAllMedicalAppointmentQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalAppointmentByEventDate;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalAppointmentByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalAppointmentByPatientIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalAppointmentQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.MedicalAppointmentRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,18 @@ public class MedicalAppointmentQueryServiceImpl implements MedicalAppointmentQue
     @Override
     public Optional<MedicalAppointment> handle(GetMedicalAppointmentByIdQuery query) {
         return medicalAppointmentRepository.findById(query.id());
+    }
+
+    @Override
+    public List<MedicalAppointment> handle(GetMedicalAppointmentByEventDate query) {
+        return medicalAppointmentRepository.findByEventDate(query.date());
+
+    }
+
+    @Override
+    public List<MedicalAppointment> handle(GetMedicalAppointmentByPatientIdQuery query) {
+        return medicalAppointmentRepository.findByPatientId(query.patientId());
+
     }
 
 }

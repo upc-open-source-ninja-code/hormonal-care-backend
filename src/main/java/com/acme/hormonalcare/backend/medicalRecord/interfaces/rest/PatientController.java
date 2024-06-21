@@ -51,7 +51,7 @@ public class PatientController {
 
 
 
-    @GetMapping("/{patientRecordId}")
+    @GetMapping("/record/{patientRecordId}")
     public ResponseEntity<PatientResource> getPatientByPatientRecordId(@PathVariable String patientRecordId) {
         var PatientRecordId = new PatientRecordId(patientRecordId);
         var getPatientByPatientRecordIdQuery = new GetPatientByPatientRecordIdQuery(PatientRecordId);
