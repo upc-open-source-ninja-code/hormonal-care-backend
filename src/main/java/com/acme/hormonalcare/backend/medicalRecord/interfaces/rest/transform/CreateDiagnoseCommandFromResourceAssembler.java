@@ -5,6 +5,6 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Cre
 
 public class CreateDiagnoseCommandFromResourceAssembler {
     public static CreateDiagnoseCommand toCommandFromResource(CreateDiagnoseResource resource) {
-        return new CreateDiagnoseCommand(resource.diagnose(), resource.description());
+        return new CreateDiagnoseCommand(resource.description());
     }
 }

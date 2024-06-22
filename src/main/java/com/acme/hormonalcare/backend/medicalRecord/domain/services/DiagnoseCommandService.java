@@ -1,10 +1,12 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.services;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Diagnose;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreateDiagnoseCommand;
-import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.DeleteDiagnoseCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdateDiagnoseCommand;
+
+import java.util.Optional;
 
 public interface DiagnoseCommandService {
-    Long handle(CreateDiagnoseCommand command);
-    void handle(DeleteDiagnoseCommand command);
-
+    Optional<Diagnose> handle(CreateDiagnoseCommand command);
+    Optional<Diagnose> handle(UpdateDiagnoseCommand command);
 }

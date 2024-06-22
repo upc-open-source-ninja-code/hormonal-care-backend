@@ -8,7 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiagnoseQueryService {
-    List<Diagnose> handle(GetAllDiagnosesQuery query);
-
     Optional<Diagnose> handle(GetDiagnoseByIdQuery query);
 }

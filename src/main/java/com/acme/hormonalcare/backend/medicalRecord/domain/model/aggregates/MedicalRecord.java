@@ -26,7 +26,4 @@ public class MedicalRecord extends AuditableAbstractAggregateRoot<MedicalRecord>
 //        this.reasonOfConsultation = command.reasonOfConsultation();
 //    }
 
-    public Long getReasonOfConsultationId() {
-        return reasonOfConsultation.getId();
-    }
 }

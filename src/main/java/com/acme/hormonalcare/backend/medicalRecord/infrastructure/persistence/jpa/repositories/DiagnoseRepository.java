@@ -8,7 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface DiagnoseRepository extends JpaRepository<Diagnose, Long> {
-
-    Optional<Diagnose> findByDiagnose(String diagnose);
-    boolean existsByDiagnose(String diagnose);
 }
