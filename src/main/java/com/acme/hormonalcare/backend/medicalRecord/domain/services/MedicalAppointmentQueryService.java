@@ -14,4 +14,5 @@ public interface MedicalAppointmentQueryService {
     Optional<MedicalAppointment> handle(GetMedicalAppointmentByIdQuery query);
     List<MedicalAppointment> handle(GetMedicalAppointmentByEventDate query);
     List<MedicalAppointment> handle(GetMedicalAppointmentByPatientIdQuery query);
+
 }
