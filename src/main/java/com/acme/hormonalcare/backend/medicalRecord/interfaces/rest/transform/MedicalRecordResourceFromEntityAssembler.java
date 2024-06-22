@@ -7,7 +7,7 @@ public class MedicalRecordResourceFromEntityAssembler {
     public static MedicalRecordResource toResourceFromEntity(MedicalRecord entity){
         return new MedicalRecordResource(
                 entity.getId(),
-                entity.getReasonOfConsultationId()
+                entity.getPatientId()
         );
     }
 }

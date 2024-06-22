@@ -9,24 +9,21 @@ import lombok.Getter;
 
 @Entity
 public class MedicalRecord extends AuditableAbstractAggregateRoot<MedicalRecord> {
+
     @Getter
     @OneToOne
-    @JoinColumn(name = "reason_of_consultation_id", referencedColumnName = "id")
-    private ReasonOfConsultation reasonOfConsultation;
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    private Patient patient;
 
     public MedicalRecord() {
-        this.reasonOfConsultation = new ReasonOfConsultation();
+        this.patient = new Patient();
     }
 
-    public MedicalRecord(ReasonOfConsultation reasonOfConsultation) {
-        this.reasonOfConsultation = reasonOfConsultation;
+    public MedicalRecord(Patient patient) {
+        this.patient = patient;
     }
 
-//    public MedicalRecord(CreateMedicalRecordCommand command) {
-//        this.reasonOfConsultation = command.reasonOfConsultation();
-//    }
-
-    public Long getReasonOfConsultationId() {
-        return reasonOfConsultation.getId();
+    public Long getPatientId() {
+        return patient.getId();
     }
 }
