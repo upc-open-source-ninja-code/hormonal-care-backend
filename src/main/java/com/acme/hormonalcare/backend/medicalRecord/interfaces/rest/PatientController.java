@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetProfileIdByPatientIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.PatientRecordId;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByPatientRecordIdQuery;
@@ -48,7 +49,13 @@ public class PatientController {
     }
 
 
-
+    @GetMapping("/{patientId}/profile-id")
+    public ResponseEntity<Long> getProfileIdByPatientId(@PathVariable Long patientId) {
+        var getProfileIdByPatientIdQuery = new GetProfileIdByPatientIdQuery(patientId);
+        var profileId = patientQueryService.handle(getProfileIdByPatientIdQuery);
+        if (profileId.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(profileId.get());
+    }
 
 
     @GetMapping("/record/{patientRecordId}")
