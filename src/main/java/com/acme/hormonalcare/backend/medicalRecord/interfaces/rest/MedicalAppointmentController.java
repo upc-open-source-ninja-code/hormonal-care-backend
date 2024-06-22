@@ -1,6 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.DeleteMedicalAppointmentCommand;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetAllMedicalAppointmentQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalAppointmentByIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalAppointmentCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalAppointmentQueryService;
@@ -14,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/medicalAppointment", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +38,14 @@ public class MedicalAppointmentController {
         var medicalAppointmentResource = MedicalAppointmentResourceFromEntityAssembler.toResourceFromEntity(medicalAppointment.get());
         return new ResponseEntity<>(medicalAppointmentResource, HttpStatus.CREATED);
     }
-
+    @GetMapping
+    public ResponseEntity<List<MedicalAppointmentResource>> getAllMedicalAppointments(){
+        var medicalAppointments = medicalAppointmentQueryService.handle(new GetAllMedicalAppointmentQuery());
+        var medicalAppointmentResources = medicalAppointments.stream()
+                .map(MedicalAppointmentResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(medicalAppointmentResources);
+    }
     @GetMapping("/{medicalAppointmentId}")
     public ResponseEntity<MedicalAppointmentResource> getMedicalAppointmentById(@PathVariable Long medicalAppointmentId){
         var getMedicalAppointmentByIdQuery = new GetMedicalAppointmentByIdQuery(medicalAppointmentId);
