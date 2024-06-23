@@ -2,6 +2,7 @@ package com.acme.hormonalcare.backend.medicalRecord.application.internal.queryse
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.ReasonOfConsultation;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetReasonOfConsultationByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetReasonOfConsultationByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.ReasonOfConsultationQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.ReasonOfConsultationRepository;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,11 @@ public class ReasonOfConsultationQueryServiceImpl implements ReasonOfConsultatio
     @Override
     public Optional<ReasonOfConsultation> handle(GetReasonOfConsultationByIdQuery query) {
         return reasonOfConsultationRepository.findById(query.id());
+    }
+
+
+    @Override
+    public Optional<ReasonOfConsultation> handle(GetReasonOfConsultationByMedicalRecordIdQuery query) {
+        return reasonOfConsultationRepository.findByMedicalRecordId(query.medicalRecordId());
     }
 }

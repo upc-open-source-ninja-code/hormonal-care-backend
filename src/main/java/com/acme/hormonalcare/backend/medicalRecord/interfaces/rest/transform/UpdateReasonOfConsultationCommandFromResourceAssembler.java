@@ -8,7 +8,8 @@ public class UpdateReasonOfConsultationCommandFromResourceAssembler {
         return new UpdateReasonOfConsultationCommand(
                 id,
                 resource.description(),
-                resource.symptoms()
+                resource.symptoms(),
+                resource.medicalRecordId()
         );
     }
 }
