@@ -1,10 +1,12 @@
 package com.acme.hormonalcare.backend.medicalRecord.application.internal.commandservices;
 import com.acme.hormonalcare.backend.medicalRecord.application.internal.outboundservices.acl.ExternalProfileService;
+import com.acme.hormonalcare.backend.medicalRecord.domain.events.PatientCreatedEvent;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Patient;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.CreatePatientCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdatePatientCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.PatientRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class PatientCommandServiceImpl implements PatientCommandService {
     private final PatientRepository patientRepository;
     private final ExternalProfileService externalProfileService;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public PatientCommandServiceImpl(PatientRepository patientRepository, ExternalProfileService externalProfileService) {
+    public PatientCommandServiceImpl(PatientRepository patientRepository, ExternalProfileService externalProfileService, ApplicationEventPublisher eventPublisher) {
         this.patientRepository = patientRepository;
         this.externalProfileService = externalProfileService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class PatientCommandServiceImpl implements PatientCommandService {
 
         var patient = new Patient(profileId.get(),command.typeofblood());
         patientRepository.save(patient);
+        eventPublisher.publishEvent(new PatientCreatedEvent(patient.getId()));
         return Optional.of(patient);
     }
 
