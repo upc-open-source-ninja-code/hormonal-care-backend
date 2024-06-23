@@ -5,6 +5,6 @@ import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.Cre
 
 public class CreateTreatmentCommandFromResourceAssembler {
     public static CreateTreatmentCommand toCommandFromResource(CreateTreatmentResource resource){
-        return new CreateTreatmentCommand(resource.description());
+        return new CreateTreatmentCommand(resource.description(), resource.medicalRecordId());
     }
 }
