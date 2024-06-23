@@ -7,6 +7,8 @@ public class ReasonOfConsultationResourceFromEntityAssembler {
     public static ReasonOfConsultationResource toResourceFromEntity(ReasonOfConsultation entity) {
         return new ReasonOfConsultationResource(
                 entity.getDescription(),
-                entity.getSymptoms());
+                entity.getSymptoms(),
+                entity.getMedicalRecord().getId()
+        );
     }
 }

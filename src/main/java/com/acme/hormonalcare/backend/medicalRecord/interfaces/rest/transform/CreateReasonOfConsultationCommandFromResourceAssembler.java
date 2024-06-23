@@ -7,7 +7,8 @@ public class CreateReasonOfConsultationCommandFromResourceAssembler {
     public static CreateReasonOfConsultationCommand toCommandFromResource(CreateReasonOfConsultationResource resource) {
         return new CreateReasonOfConsultationCommand(
                 resource.description(),
-                resource.symptoms()
+                resource.symptoms(),
+                resource.medicalRecordId()
         );
     }
 }
