@@ -2,6 +2,7 @@ package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetReasonOfConsultationByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetReasonOfConsultationByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.ReasonOfConsultationCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.ReasonOfConsultationQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreateReasonOfConsultationResource;
@@ -34,6 +35,19 @@ public class ReasonOfConsultationController {
         var reasonOfConsultationResource = ReasonOfConsultationResourceFromEntityAssembler.toResourceFromEntity(reasonOfConsultation.get());
         return new ResponseEntity<>(reasonOfConsultationResource, HttpStatus.CREATED);
     }
+
+
+    @GetMapping("/medicalRecordId/{medicalRecordId}")
+    public ResponseEntity<ReasonOfConsultationResource> getReasonOfConsultationByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getReasonOfConsultationByMedicalRecordIdQuery = new GetReasonOfConsultationByMedicalRecordIdQuery(medicalRecordId);
+        var reasonOfConsultation = reasonOfConsultationQueryService.handle(getReasonOfConsultationByMedicalRecordIdQuery);
+        if (reasonOfConsultation.isEmpty()) return ResponseEntity.notFound().build();
+        var reasonOfConsultationResource = ReasonOfConsultationResourceFromEntityAssembler.toResourceFromEntity(reasonOfConsultation.get());
+        return ResponseEntity.ok(reasonOfConsultationResource);
+    }
+
+
+
 
     @GetMapping("/{reasonOfConsultationId}")
     public ResponseEntity<ReasonOfConsultationResource> getReasonOfConsultationById(@PathVariable Long reasonOfConsultationId) {
