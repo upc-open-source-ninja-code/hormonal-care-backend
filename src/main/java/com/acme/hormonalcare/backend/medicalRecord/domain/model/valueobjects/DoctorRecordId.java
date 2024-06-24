@@ -4,21 +4,14 @@ import jakarta.persistence.Embeddable;
 import java.util.UUID;
 
 @Embeddable
-public class DoctorRecordId {
-    private String doctorRecordId;
-
+public record DoctorRecordId(String doctorRecordId) {
     public DoctorRecordId() {
-        this.doctorRecordId = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString());
     }
 
-    public DoctorRecordId(String doctorRecordId) {
+    public DoctorRecordId {
         if (doctorRecordId == null || doctorRecordId.isBlank()) {
             throw new IllegalArgumentException("Patient record profileId cannot be null or blank");
         }
-        this.doctorRecordId = doctorRecordId;
-    }
-
-    public String doctorRecordId() {
-        return doctorRecordId;
     }
 }
