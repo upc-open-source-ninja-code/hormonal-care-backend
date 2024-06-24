@@ -12,7 +12,8 @@ public class ProfileResourceFromEntityAssembler {
                 entity.getPhoneNumber(),
                 entity.getEmail().email(),
                 entity.getImage(),
-                entity.getBirthday().birthday()
+                entity.getBirthday().birthday(),
+                entity.getUser().getId()
         );
     }
 }

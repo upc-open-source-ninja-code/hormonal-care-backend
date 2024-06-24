@@ -46,10 +46,14 @@ public class PatientCommandServiceImpl implements PatientCommandService {
                     command.phoneNumber(),
                     command.email(),
                     command.Image(),
-                    command.birthday());
+                    command.birthday(),
+                    command.userId());
         } else{
             patientRepository.findByProfileId(profileId.get()).ifPresent(patient -> {
                 throw new IllegalArgumentException("Patient already exists");
+            });
+            doctorRepository.findByProfileId(profileId.get()).ifPresent(doctor -> {
+                throw new IllegalArgumentException("Doctor already exists");
             });
 
         }

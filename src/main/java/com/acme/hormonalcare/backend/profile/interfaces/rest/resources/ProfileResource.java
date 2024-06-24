@@ -10,7 +10,7 @@ public record ProfileResource
         String phoneNumber,
         String email,
         String Image,
-        Date birthday
-        )
+        Date birthday,
+        Long userId)
 {
 }

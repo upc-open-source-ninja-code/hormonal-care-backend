@@ -10,6 +10,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.Pro
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.SubSpecialty;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.DoctorCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.DoctorRepository;
+import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.PatientRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +20,20 @@ import java.util.Optional;
 public class DoctorCommandServiceImpl implements DoctorCommandService {
 
     private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
     private final ExternalProfileService externalProfileService;
     private final ApplicationEventPublisher eventPublisher;
 
-    public DoctorCommandServiceImpl(DoctorRepository doctorRepository, ExternalProfileService externalProfileService, ApplicationEventPublisher eventPublisher) {
+    public DoctorCommandServiceImpl(DoctorRepository doctorRepository, PatientRepository patientRepository, ExternalProfileService externalProfileService, ApplicationEventPublisher eventPublisher) {
         this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
         this.externalProfileService = externalProfileService;
         this.eventPublisher = eventPublisher;
     }
 
     @Override
     public Optional<Doctor> handle(CreateDoctorCommand command) {
+
         var profileId = externalProfileService.fetchProfileIdByEmail(command.email());
         if (profileId.isEmpty()){
             profileId = externalProfileService.createProfile(
@@ -40,10 +44,14 @@ public class DoctorCommandServiceImpl implements DoctorCommandService {
                     command.phoneNumber(),
                     command.email(),
                     command.Image(),
-                    command.birthday());
+                    command.birthday(),
+                    command.userId());
         } else{
             doctorRepository.findByProfileId(profileId.get()).ifPresent(doctor -> {
                 throw new IllegalArgumentException("Doctor already exists");
+            });
+            patientRepository.findByProfileId(profileId.get()).ifPresent(patient -> {
+                throw new IllegalArgumentException("Patient already exists");
             });
         }
         if (profileId.isEmpty()) throw new IllegalArgumentException("Unable to create profile");
