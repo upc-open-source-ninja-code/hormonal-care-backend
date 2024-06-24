@@ -1,11 +1,10 @@
 package com.acme.hormonalcare.backend.profile.domain.model.aggregates;
 
+import com.acme.hormonalcare.backend.iam.domain.model.aggregates.User;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.CreateProfileCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.valueobjects.*;
 import com.acme.hormonalcare.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
@@ -34,7 +33,13 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
 
     private String Image;
 
-    public Profile(PersonName name, Age age, Gender gender, String phoneNumber, Email email, Birthday birthday, String Image) {
+    @Getter
+    @OneToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "id" )
+    private User user;
+
+
+    public Profile(PersonName name, Age age, Gender gender, String phoneNumber, Email email, Birthday birthday, String Image, User user) {
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -42,12 +47,13 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.email = email;
         this.birthday = birthday;
         this.Image = Image;
+        this.user = user;
     }
 
     public Profile(){
     }
 
-    public Profile(CreateProfileCommand command) {
+    public Profile(CreateProfileCommand command, User user) {
         this.name = new PersonName(command.firstName(), command.lastName());
         this.age = new Age(command.age());
         this.birthday = new Birthday(command.birthday());
@@ -55,6 +61,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.phoneNumber = command.phoneNumber();
         this.email = new Email(command.email());
         this.Image = command.Image();
+        this.user = user;
     }
 
     public Profile upsetPhoneNumber(String phoneNumber){

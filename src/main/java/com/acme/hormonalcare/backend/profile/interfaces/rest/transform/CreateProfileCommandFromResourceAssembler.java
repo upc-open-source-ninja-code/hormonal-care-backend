@@ -13,9 +13,10 @@ public class CreateProfileCommandFromResourceAssembler {
                 resource.phoneNumber(),
                 resource.email(),
                 resource.Image(),
-                resource.birthday()
+                resource.birthday(),
+                resource.userId()
         );
-        }
+    }
 }
 
 

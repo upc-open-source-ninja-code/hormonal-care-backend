@@ -11,6 +11,7 @@ public record CreatePatientCommand(
         String email,
         String Image,
         Date birthday,
+        Long userId,
         String typeofblood,
         Long doctorId) {
 }

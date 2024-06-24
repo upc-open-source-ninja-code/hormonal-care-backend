@@ -30,7 +30,8 @@ public class ExternalProfileService {
             String phoneNumber,
             String email,
             String Image,
-            Date birthday) {
+            Date birthday,
+            Long userId) {
         var profileId = profilesContextFacade.createProfile(
                 firstName,
                 lastName,
@@ -39,7 +40,8 @@ public class ExternalProfileService {
                 phoneNumber,
                 email,
                 Image,
-                birthday);
+                birthday,
+                userId);
         if (profileId == 0L) {
             return Optional.empty();
         }

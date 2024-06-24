@@ -31,7 +31,9 @@ public class PatientCommandServiceImpl implements PatientCommandService {
     public Optional<Patient> handle(CreatePatientCommand command) {
 
         Long doctorId = command.doctorId();
-        if (doctorId != 0 && !doctorRepository.existsById(doctorId)) {
+        if (doctorId == null || doctorId == 0) {
+            doctorId = null;
+        } else if (!doctorRepository.existsById(doctorId)) {
             throw new IllegalArgumentException("Doctor with id " + doctorId + " does not exist");
         }
         var profileId = externalProfileService.fetchProfileIdByEmail(command.email());
@@ -44,10 +46,14 @@ public class PatientCommandServiceImpl implements PatientCommandService {
                     command.phoneNumber(),
                     command.email(),
                     command.Image(),
-                    command.birthday());
+                    command.birthday(),
+                    command.userId());
         } else{
             patientRepository.findByProfileId(profileId.get()).ifPresent(patient -> {
                 throw new IllegalArgumentException("Patient already exists");
+            });
+            doctorRepository.findByProfileId(profileId.get()).ifPresent(doctor -> {
+                throw new IllegalArgumentException("Doctor already exists");
             });
 
         }
@@ -85,7 +91,13 @@ public class PatientCommandServiceImpl implements PatientCommandService {
         var result = patientRepository.findById(id);
         var patientToUpdate = result.get();
         try {
-            var updatedPatient = patientRepository.save(patientToUpdate.updateDoctorId(command.doctorId()));
+            Long doctorId = command.doctorId();
+            if (doctorId == null || doctorId == 0) {
+                doctorId = null;
+            } else if (!doctorRepository.existsById(doctorId)) {
+                throw new IllegalArgumentException("Doctor with id " + doctorId + " does not exist");
+            }
+            var updatedPatient = patientRepository.save(patientToUpdate.updateDoctorId(doctorId));
             return Optional.of(updatedPatient);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating patient: " + e.getMessage());

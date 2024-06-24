@@ -11,6 +11,7 @@ public record CreateDoctorCommand(
         String email,
         String Image,
         Date birthday,
+        Long userId,
         Long professionalIdentificationNumber,
         String subSpecialty,
         String certification,
