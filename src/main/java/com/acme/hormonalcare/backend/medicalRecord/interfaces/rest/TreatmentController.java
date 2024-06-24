@@ -1,6 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetTreatmentByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetTreatmentByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.TreatmentCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.TreatmentQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreateTreatmentResource;
@@ -51,6 +52,15 @@ public class TreatmentController {
         var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(updateTreatment.get());
         return ResponseEntity.ok(treatmentResource);
 
+    }
+
+    @GetMapping("/medicalRecordId/{medicalRecordId}")
+    public ResponseEntity<TreatmentResource> getTreatmentByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getTreatmentByMedicalRecordIdQuery = new GetTreatmentByMedicalRecordIdQuery(medicalRecordId);
+        var treatment = treatmentQueryService.handle(getTreatmentByMedicalRecordIdQuery);
+        if (treatment.isEmpty()) return ResponseEntity.notFound().build();
+        var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(treatment.get());
+        return ResponseEntity.ok(treatmentResource);
     }
 
 }
