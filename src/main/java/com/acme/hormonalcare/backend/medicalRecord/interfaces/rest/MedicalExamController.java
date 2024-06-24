@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value="/api/v1/medical-record/medical-exam", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MedicalExamController {
@@ -37,12 +40,14 @@ public class MedicalExamController {
     }
 
     @GetMapping("/medicalRecordId/{medicalRecordId}")
-    public ResponseEntity<MedicalExamResource> getMedicalExamByMedicalRecordId(@PathVariable Long medicalRecordId) {
-        var getMedicalExamByMedicalRecordIdQuery = new GetMedicalExamByMedicalRecordIdQuery(medicalRecordId);
-        var medicalExam = medicalExamQueryService.handle(getMedicalExamByMedicalRecordIdQuery);
-        if (medicalExam.isEmpty()) return ResponseEntity.notFound().build();
-        var medicalExamResource = MedicalExamResourceFromEntityAssembler.toResourceFromEntity(medicalExam.get());
-        return ResponseEntity.ok(medicalExamResource);
+    public ResponseEntity<List<MedicalExamResource>> getMedicalExamsByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getMedicalExamsByMedicalRecordIdQuery = new GetMedicalExamByMedicalRecordIdQuery(medicalRecordId);
+        var medicalExams = medicalExamQueryService.handle(getMedicalExamsByMedicalRecordIdQuery);
+        if (medicalExams.isEmpty()) return ResponseEntity.notFound().build();
+        var medicalExamResources = medicalExams.stream()
+                .map(MedicalExamResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(medicalExamResources);
     }
 
 

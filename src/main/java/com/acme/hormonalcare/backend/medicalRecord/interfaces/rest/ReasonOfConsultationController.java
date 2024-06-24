@@ -16,6 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value="/api/v1/medical-record/reasons-of-consultation", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReasonOfConsultationController {
@@ -38,12 +41,14 @@ public class ReasonOfConsultationController {
 
 
     @GetMapping("/medicalRecordId/{medicalRecordId}")
-    public ResponseEntity<ReasonOfConsultationResource> getReasonOfConsultationByMedicalRecordId(@PathVariable Long medicalRecordId) {
-        var getReasonOfConsultationByMedicalRecordIdQuery = new GetReasonOfConsultationByMedicalRecordIdQuery(medicalRecordId);
-        var reasonOfConsultation = reasonOfConsultationQueryService.handle(getReasonOfConsultationByMedicalRecordIdQuery);
-        if (reasonOfConsultation.isEmpty()) return ResponseEntity.notFound().build();
-        var reasonOfConsultationResource = ReasonOfConsultationResourceFromEntityAssembler.toResourceFromEntity(reasonOfConsultation.get());
-        return ResponseEntity.ok(reasonOfConsultationResource);
+    public ResponseEntity<List<ReasonOfConsultationResource>> getReasonsOfConsultationByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getReasonsOfConsultationByMedicalRecordIdQuery = new GetReasonOfConsultationByMedicalRecordIdQuery(medicalRecordId);
+        var reasonsOfConsultation = reasonOfConsultationQueryService.handle(getReasonsOfConsultationByMedicalRecordIdQuery);
+        if (reasonsOfConsultation.isEmpty()) return ResponseEntity.notFound().build();
+        var reasonOfConsultationResources = reasonsOfConsultation.stream()
+                .map(ReasonOfConsultationResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reasonOfConsultationResources);
     }
 
 
