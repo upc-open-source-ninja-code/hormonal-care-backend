@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreateMedicalExamResource;
@@ -34,6 +35,17 @@ public class MedicalExamController {
         var medicalExamResource = MedicalExamResourceFromEntityAssembler.toResourceFromEntity(medicalExam.get());
         return new ResponseEntity<>(medicalExamResource, HttpStatus.CREATED);
     }
+
+    @GetMapping("/medicalRecordId/{medicalRecordId}")
+    public ResponseEntity<MedicalExamResource> getMedicalExamByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getMedicalExamByMedicalRecordIdQuery = new GetMedicalExamByMedicalRecordIdQuery(medicalRecordId);
+        var medicalExam = medicalExamQueryService.handle(getMedicalExamByMedicalRecordIdQuery);
+        if (medicalExam.isEmpty()) return ResponseEntity.notFound().build();
+        var medicalExamResource = MedicalExamResourceFromEntityAssembler.toResourceFromEntity(medicalExam.get());
+        return ResponseEntity.ok(medicalExamResource);
+    }
+
+
 
     @GetMapping("/{medicalExamId}")
     public ResponseEntity<MedicalExamResource> getMedicalExamById(@PathVariable Long medicalExamId) {
