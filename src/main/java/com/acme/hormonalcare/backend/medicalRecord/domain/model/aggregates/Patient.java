@@ -35,11 +35,13 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
         this.profileId = new ProfileId(profileId);
         this.typeofblood = typeofblood;
         this.patientRecordId = new PatientRecordId();
+        this.doctor = doctor;
     }
     public Patient(ProfileId profileId, String typeofblood, Long doctor) {
         this.profileId = profileId;
         this.typeofblood = typeofblood;
         this.patientRecordId = new PatientRecordId();
+        this.doctor = doctor;
     }
 
     public Patient(CreatePatientCommand command, ProfileId profileId, Long doctor) {
