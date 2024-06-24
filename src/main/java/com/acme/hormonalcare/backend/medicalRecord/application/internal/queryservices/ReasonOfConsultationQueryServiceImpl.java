@@ -7,6 +7,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.services.ReasonOfConsu
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.ReasonOfConsultationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class ReasonOfConsultationQueryServiceImpl implements ReasonOfConsultatio
 
 
     @Override
-    public Optional<ReasonOfConsultation> handle(GetReasonOfConsultationByMedicalRecordIdQuery query) {
+    public List<ReasonOfConsultation> handle(GetReasonOfConsultationByMedicalRecordIdQuery query) {
         return reasonOfConsultationRepository.findByMedicalRecordId(query.medicalRecordId());
     }
 }

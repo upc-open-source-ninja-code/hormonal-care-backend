@@ -8,6 +8,7 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamQu
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.MedicalExamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class MedicalExamQueryServiceImpl implements MedicalExamQueryService {
@@ -24,7 +25,7 @@ public class MedicalExamQueryServiceImpl implements MedicalExamQueryService {
     }
 
     @Override
-    public Optional<MedicalExam> handle(GetMedicalExamByMedicalRecordIdQuery query) {
+    public List<MedicalExam> handle(GetMedicalExamByMedicalRecordIdQuery query) {
         return medicalExamRepository.findByMedicalRecordId(query.medicalRecordId());
     }
 

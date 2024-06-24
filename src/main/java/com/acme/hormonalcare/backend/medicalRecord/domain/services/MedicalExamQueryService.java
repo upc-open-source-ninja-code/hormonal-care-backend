@@ -3,9 +3,10 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Medic
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByMedicalRecordIdQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MedicalExamQueryService {
     Optional<MedicalExam> handle(GetMedicalExamByIdQuery query);
-    Optional<MedicalExam> handle(GetMedicalExamByMedicalRecordIdQuery query);
+    List<MedicalExam> handle(GetMedicalExamByMedicalRecordIdQuery query);
 }

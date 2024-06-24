@@ -15,6 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value = "/api/v1/medical-record/treatments",produces = MediaType.APPLICATION_JSON_VALUE)
 public class TreatmentController {
@@ -55,12 +58,14 @@ public class TreatmentController {
     }
 
     @GetMapping("/medicalRecordId/{medicalRecordId}")
-    public ResponseEntity<TreatmentResource> getTreatmentByMedicalRecordId(@PathVariable Long medicalRecordId) {
-        var getTreatmentByMedicalRecordIdQuery = new GetTreatmentByMedicalRecordIdQuery(medicalRecordId);
-        var treatment = treatmentQueryService.handle(getTreatmentByMedicalRecordIdQuery);
-        if (treatment.isEmpty()) return ResponseEntity.notFound().build();
-        var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(treatment.get());
-        return ResponseEntity.ok(treatmentResource);
+    public ResponseEntity<List<TreatmentResource>> getTreatmentsByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getTreatmentsByMedicalRecordIdQuery = new GetTreatmentByMedicalRecordIdQuery(medicalRecordId);
+        var treatments = treatmentQueryService.handle(getTreatmentsByMedicalRecordIdQuery);
+        if (treatments.isEmpty()) return ResponseEntity.notFound().build();
+        var treatmentResources = treatments.stream()
+                .map(TreatmentResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(treatmentResources);
     }
 
 }
