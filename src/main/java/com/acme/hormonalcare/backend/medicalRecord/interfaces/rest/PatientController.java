@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.commands.UpdatePatientDoctorIdCommand;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetProfileIdByPatientIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.valueobjects.PatientRecordId;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetPatientByIdQuery;
@@ -9,10 +10,12 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientComman
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.PatientQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreatePatientResource;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.PatientResource;
+import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.UpdatePatientDoctorIdResource;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.UpdatePatientResource;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.transform.CreatePatientCommandFromResourceAssembler;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.transform.PatientResourceFromEntityAssembler;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.transform.UpdatePatientCommandFromResourceAssembler;
+import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.transform.UpdatePatientDoctorIdCommandFromResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +89,16 @@ public class PatientController {
         var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(updatedPatient.get());
         return ResponseEntity.ok(patientResource);
     }
+
+    @PutMapping("/doctor/{patientId}")
+    public ResponseEntity<PatientResource> updatePatientDoctorId(@PathVariable Long patientId, @RequestBody UpdatePatientDoctorIdResource updatePatientDoctorIdResource) {
+        var updatePatientDoctorIdCommand = UpdatePatientDoctorIdCommandFromResourceAssembler.toCommandFromResource(patientId, updatePatientDoctorIdResource);
+        var updatedPatient = patientCommandService.handle(updatePatientDoctorIdCommand);
+        if (updatedPatient.isEmpty()) return ResponseEntity.badRequest().build();
+        var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(updatedPatient.get());
+        return ResponseEntity.ok(patientResource);
+    }
+
 }
 
 

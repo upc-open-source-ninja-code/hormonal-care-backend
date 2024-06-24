@@ -8,6 +8,7 @@ public class PatientResourceFromEntityAssembler {
         return new PatientResource(
                 entity.getTypeofblood(),
                 entity.getPatientRecordId(),
-                entity.getProfileId());
+                entity.getProfileId(),
+                entity.getDoctor().getId());
     }
 }
