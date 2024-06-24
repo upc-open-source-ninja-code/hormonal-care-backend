@@ -35,23 +35,16 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
     @Column(name = "doctorRecord_id")
     private  DoctorRecordId doctorRecordId;
 
-
+    // Constructor vacío
     public Doctor() {
-
+        
     }
 
-
-    public Doctor(
-            ProfessionalIdentificationNumber professionalIdentificationNumber,
-            SubSpecialty subSpecialty,
-            Certification certification,
-            Long appointmentFee,
-            Long subscriptionId,
-            Long profileId
-    ) {
-        this.professionalIdentificationNumber = professionalIdentificationNumber;
-        this.subSpecialty = subSpecialty;
-        this.certification = certification;
+    // Constructor con parámetros primitivos
+    public Doctor(Long professionalIdentificationNumber, String subSpecialty, String certification, Long appointmentFee, Long subscriptionId, Long profileId) {
+        this.professionalIdentificationNumber = new ProfessionalIdentificationNumber(professionalIdentificationNumber);
+        this.subSpecialty = new SubSpecialty(subSpecialty);
+        this.certification = new Certification(certification);
         this.appointmentFee = appointmentFee;
         this.subscriptionId = subscriptionId;
         this.codeDoctor = new CodeDoctor(generateCodeDoctor());
@@ -59,14 +52,8 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
         this.doctorRecordId = new DoctorRecordId();
     }
 
-    public Doctor(
-            ProfessionalIdentificationNumber professionalIdentificationNumber,
-            SubSpecialty subSpecialty,
-            Certification certification,
-            Long appointmentFee,
-            Long subscriptionId,
-            ProfileId profileId
-    ) {
+    // Constructor con parámetros de tipo objeto
+    public Doctor(ProfessionalIdentificationNumber professionalIdentificationNumber, SubSpecialty subSpecialty, Certification certification, Long appointmentFee, Long subscriptionId, ProfileId profileId) {
         this.professionalIdentificationNumber = professionalIdentificationNumber;
         this.subSpecialty = subSpecialty;
         this.certification = certification;
@@ -77,6 +64,7 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
         this.doctorRecordId = new DoctorRecordId();
     }
 
+    // Constructor con comando y perfil
     public Doctor(CreateDoctorCommand command, ProfileId profileId){
         this.professionalIdentificationNumber = new ProfessionalIdentificationNumber(command.professionalIdentificationNumber());
         this.subSpecialty = new SubSpecialty(command.subSpecialty());
@@ -84,17 +72,13 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
         this.appointmentFee = command.appointmentFee();
         this.subscriptionId = command.subscriptionId();
         this.codeDoctor = new CodeDoctor(generateCodeDoctor());
-        this.profileId =profileId;
+        this.profileId = profileId;
         this.doctorRecordId = new DoctorRecordId();
     }
 
 
-    public Doctor updateAppointmentFee(Long appointmentFee){
+    public Doctor updateInformation(Long appointmentFee, Long subscriptionId) {
         this.appointmentFee = appointmentFee;
-        return this;
-    }
-
-    public Doctor updateSubscriptionId(Long subscriptionId){
         this.subscriptionId = subscriptionId;
         return this;
     }
