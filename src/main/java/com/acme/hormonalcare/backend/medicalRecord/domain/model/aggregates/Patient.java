@@ -22,9 +22,9 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
     private ProfileId profileId;
 
     @Getter
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+    @Column(name = "doctor_id")
+    private Long doctor;
+
 
     public Patient() {
         this.typeofblood = "";
@@ -42,7 +42,7 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
         this.patientRecordId = new PatientRecordId();
     }
 
-    public Patient(CreatePatientCommand command, ProfileId profileId, Doctor doctor) {
+    public Patient(CreatePatientCommand command, ProfileId profileId, Long doctor) {
         this.typeofblood = command.typeofblood();
         this.profileId = profileId;
         this.patientRecordId = new PatientRecordId();
@@ -53,7 +53,7 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
 
         return this;
     }
-    public Patient updateDoctorId(Doctor doctor) {
+    public Patient updateDoctorId(Long doctor) {
         this.doctor = doctor;
         return this;
     }

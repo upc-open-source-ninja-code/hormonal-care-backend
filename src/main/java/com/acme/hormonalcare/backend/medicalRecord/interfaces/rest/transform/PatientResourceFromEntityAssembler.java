@@ -9,6 +9,6 @@ public class PatientResourceFromEntityAssembler {
                 entity.getTypeofblood(),
                 entity.getPatientRecordId(),
                 entity.getProfileId(),
-                entity.getDoctor().getId());
+                entity.getDoctor());
     }
 }
