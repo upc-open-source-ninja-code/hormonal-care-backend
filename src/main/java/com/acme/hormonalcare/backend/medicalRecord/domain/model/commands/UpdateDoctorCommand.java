@@ -1,7 +1,8 @@
 package com.acme.hormonalcare.backend.medicalRecord.domain.model.commands;
 
-public record UpdateDoctorSubscriptionCommand(
+public record UpdateDoctorCommand(
         Long id,
-        Long subscriptionId
-) {
+        Long appointmentFee,
+        Long subscriptionId)
+{
 }

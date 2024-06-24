@@ -11,7 +11,7 @@ public record CreateDoctorResource(
         String email,
         String Image,
         Date birthday,
-        String professionalIdentificationNumber,
+        Long professionalIdentificationNumber,
         String subSpecialty,
         String certification,
         Long appointmentFee,

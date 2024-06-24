@@ -1,7 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
 public record DoctorResource(
-        String professionalIdentificationNumber,
+        Long professionalIdentificationNumber,
         String subSpecialty,
         String certification,
         Long appointmentFee,
