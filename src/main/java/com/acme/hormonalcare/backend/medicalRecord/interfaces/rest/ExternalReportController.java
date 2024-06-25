@@ -33,6 +33,7 @@ public class ExternalReportController {
     }
 
     @GetMapping("/{externalReportId}")
+
     public ResponseEntity<ExternalReportResouce> getExternalReportById(@PathVariable Long externalReportId){
         var getExternalReportByIdQuery = new GetExternalReportByIdQuery(externalReportId);
         var externalreport = externalReportQueryService.handle(getExternalReportByIdQuery);
