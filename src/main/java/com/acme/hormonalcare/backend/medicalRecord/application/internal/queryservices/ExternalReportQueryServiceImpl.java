@@ -11,6 +11,7 @@ import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jp
 import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jpa.repositories.TreatmentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class ExternalReportQueryServiceImpl implements ExternalReportQueryService {
@@ -26,7 +27,7 @@ public class ExternalReportQueryServiceImpl implements ExternalReportQueryServic
     }
 
     @Override
-    public Optional<ExternalReport> handle(GetExternalReportByMedicalRecordIdQuery query) {
+    public List<ExternalReport> handle(GetExternalReportByMedicalRecordIdQuery query) {
         return externalReportRepository.findByMedicalRecordId(query.medicalRecordId());
     }
 }

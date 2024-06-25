@@ -5,9 +5,10 @@ import com.acme.hormonalcare.backend.medicalRecord.domain.model.aggregates.Diagn
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetDiagnoseByIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetDiagnoseByMedicalRecordIdQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DiagnoseQueryService {
     Optional<Diagnose> handle(GetDiagnoseByIdQuery query);
-    Optional<Diagnose> handle(GetDiagnoseByMedicalRecordIdQuery query);
+    List<Diagnose> handle(GetDiagnoseByMedicalRecordIdQuery query);
 }

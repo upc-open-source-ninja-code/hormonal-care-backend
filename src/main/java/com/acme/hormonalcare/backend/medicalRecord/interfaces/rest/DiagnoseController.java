@@ -16,6 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping(value = "/api/v1/medical-record/diagnoses",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,12 +60,14 @@ public class DiagnoseController {
     }
 
     @GetMapping("/medicalRecordId/{medicalRecordId}")
-    public ResponseEntity<DiagnoseResource> getDiagnoseByMedicalRecordId(@PathVariable Long medicalRecordId) {
-        var getDiagnoseByIdQuery = new GetDiagnoseByMedicalRecordIdQuery(medicalRecordId);
-        var diagnose = diagnoseQueryService.handle(getDiagnoseByIdQuery);
-        if (diagnose.isEmpty()) return ResponseEntity.notFound().build();
-        var diagnoseResource = DiagnoseResourceFromEntityAssembler.toResourceFromEntity(diagnose.get());
-        return ResponseEntity.ok(diagnoseResource);
+    public ResponseEntity<List<DiagnoseResource>> getDiagnoseByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getDiagnoseByMedicalRecordIdQuery = new GetDiagnoseByMedicalRecordIdQuery(medicalRecordId);
+        var diagnoses = diagnoseQueryService.handle(getDiagnoseByMedicalRecordIdQuery);
+        if (diagnoses.isEmpty()) return ResponseEntity.notFound().build();
+        var diagnoseResources = diagnoses.stream()
+                .map(DiagnoseResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(diagnoseResources);
     }
 
 }

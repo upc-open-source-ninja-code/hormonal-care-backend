@@ -9,6 +9,7 @@ import com.acme.hormonalcare.backend.medicalRecord.infrastructure.persistence.jp
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,7 @@ public class DiagnoseQueryServiceImpl implements DiagnoseQueryService {
     }
 
     @Override
-    public Optional<Diagnose> handle(GetDiagnoseByMedicalRecordIdQuery query) {
+    public List<Diagnose> handle(GetDiagnoseByMedicalRecordIdQuery query) {
         return diagnoseRepository.findByMedicalRecordId(query.medicalRecordId());
     }
 }
