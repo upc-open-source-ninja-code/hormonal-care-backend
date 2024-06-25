@@ -14,6 +14,7 @@ public class CreateDoctorCommandFromResourceAssembler {
                 resource.email(),
                 resource.Image(),
                 resource.birthday(),
+                resource.userId(),
                 resource.professionalIdentificationNumber(),
                 resource.subSpecialty(),
                 resource.certification(),

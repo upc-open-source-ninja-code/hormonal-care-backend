@@ -7,7 +7,8 @@ public class UpdateTreatmentCommandFromResourceAssembler {
     public static UpdateTreatmentCommand toCommandFromResource(Long id, UpdateTreatmentResource resource){
         return new UpdateTreatmentCommand(
                 id,
-                resource.description()
+                resource.description(),
+                resource.medicalRecordId()
         );
     }
 }

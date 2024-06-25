@@ -14,7 +14,9 @@ public class CreatePatientCommandFromResourceAssembler {
                 resource.email(),
                 resource.Image(),
                 resource.birthday(),
-                resource.typeofblood()
+                resource.userId(),
+                resource.typeofblood(),
+                resource.doctorId()
         );
     }
 }

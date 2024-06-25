@@ -1,6 +1,7 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetTreatmentByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetTreatmentByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.TreatmentCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.TreatmentQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreateTreatmentResource;
@@ -13,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/medical-record/treatments",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,6 +55,17 @@ public class TreatmentController {
         var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(updateTreatment.get());
         return ResponseEntity.ok(treatmentResource);
 
+    }
+
+    @GetMapping("/medicalRecordId/{medicalRecordId}")
+    public ResponseEntity<List<TreatmentResource>> getTreatmentsByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getTreatmentsByMedicalRecordIdQuery = new GetTreatmentByMedicalRecordIdQuery(medicalRecordId);
+        var treatments = treatmentQueryService.handle(getTreatmentsByMedicalRecordIdQuery);
+        if (treatments.isEmpty()) return ResponseEntity.notFound().build();
+        var treatmentResources = treatments.stream()
+                .map(TreatmentResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(treatmentResources);
     }
 
 }

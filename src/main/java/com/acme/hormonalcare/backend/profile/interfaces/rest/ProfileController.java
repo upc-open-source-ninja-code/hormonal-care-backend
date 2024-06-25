@@ -2,6 +2,7 @@ package com.acme.hormonalcare.backend.profile.interfaces.rest;
 
 import com.acme.hormonalcare.backend.profile.domain.model.commands.UpdateProfileImageCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByIdQuery;
+import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByUserIdQuery;
 import com.acme.hormonalcare.backend.profile.domain.services.ProfileCommandService;
 import com.acme.hormonalcare.backend.profile.domain.services.ProfileQueryService;
 import com.acme.hormonalcare.backend.profile.interfaces.rest.resources.CreateProfileResource;
@@ -36,6 +37,15 @@ public class ProfileController {
         var profileResource = ProfileResourceFromEntityAssembler.toResourceFromEntity(profile.get());
         return new ResponseEntity<>(profileResource, HttpStatus.CREATED);
     }
+
+
+    @GetMapping("/userId/exists/{userId}")
+    public ResponseEntity<Boolean> doesProfileExistByUserId(@PathVariable Long userId) {
+        var getProfileByUserIdQuery = new GetProfileByUserIdQuery(userId);
+        var doesProfileExist = profileQueryService.doesProfileExist(getProfileByUserIdQuery);
+        return ResponseEntity.ok(doesProfileExist);
+    }
+
 
     @GetMapping("/{profileId}")
     public ResponseEntity<ProfileResource> getProfileById(@PathVariable Long profileId){

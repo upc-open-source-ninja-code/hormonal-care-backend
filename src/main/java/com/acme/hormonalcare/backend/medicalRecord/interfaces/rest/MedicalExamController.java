@@ -1,5 +1,6 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest;
 import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByIdQuery;
+import com.acme.hormonalcare.backend.medicalRecord.domain.model.queries.GetMedicalExamByMedicalRecordIdQuery;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamCommandService;
 import com.acme.hormonalcare.backend.medicalRecord.domain.services.MedicalExamQueryService;
 import com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources.CreateMedicalExamResource;
@@ -12,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api/v1/medical-record/medical-exam", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,6 +38,19 @@ public class MedicalExamController {
         var medicalExamResource = MedicalExamResourceFromEntityAssembler.toResourceFromEntity(medicalExam.get());
         return new ResponseEntity<>(medicalExamResource, HttpStatus.CREATED);
     }
+
+    @GetMapping("/medicalRecordId/{medicalRecordId}")
+    public ResponseEntity<List<MedicalExamResource>> getMedicalExamsByMedicalRecordId(@PathVariable Long medicalRecordId) {
+        var getMedicalExamsByMedicalRecordIdQuery = new GetMedicalExamByMedicalRecordIdQuery(medicalRecordId);
+        var medicalExams = medicalExamQueryService.handle(getMedicalExamsByMedicalRecordIdQuery);
+        if (medicalExams.isEmpty()) return ResponseEntity.notFound().build();
+        var medicalExamResources = medicalExams.stream()
+                .map(MedicalExamResourceFromEntityAssembler::toResourceFromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(medicalExamResources);
+    }
+
+
 
     @GetMapping("/{medicalExamId}")
     public ResponseEntity<MedicalExamResource> getMedicalExamById(@PathVariable Long medicalExamId) {

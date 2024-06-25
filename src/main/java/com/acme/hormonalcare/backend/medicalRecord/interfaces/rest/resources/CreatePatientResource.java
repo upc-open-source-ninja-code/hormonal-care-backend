@@ -11,5 +11,7 @@ public record CreatePatientResource(
         String email,
         String Image,
         Date birthday,
-        String typeofblood) {
+        Long userId,
+        String typeofblood,
+        Long doctorId) {
 }

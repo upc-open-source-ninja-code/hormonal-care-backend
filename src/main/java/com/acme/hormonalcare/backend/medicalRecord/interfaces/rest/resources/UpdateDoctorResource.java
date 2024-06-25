@@ -1,7 +1,8 @@
 package com.acme.hormonalcare.backend.medicalRecord.interfaces.rest.resources;
 
-public record UpdateDoctorAppointmentFeeResource(
+public record UpdateDoctorResource(
         Long id,
-        Long appointmentFee
+        Long appointmentFee,
+        Long subscriptionId
 ) {
 }

@@ -1,5 +1,7 @@
 package com.acme.hormonalcare.backend.profile.application.internal.commandservices;
 
+import com.acme.hormonalcare.backend.iam.domain.model.aggregates.User;
+import com.acme.hormonalcare.backend.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 import com.acme.hormonalcare.backend.profile.domain.model.aggregates.Profile;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.CreateProfileCommand;
 import com.acme.hormonalcare.backend.profile.domain.model.commands.UpdateProfileImageCommand;
@@ -14,19 +16,23 @@ import java.util.Optional;
 @Service
 public class ProfileCommandServiceImpl implements ProfileCommandService {
     private final ProfileRepository profileRepository;
-
-    public ProfileCommandServiceImpl(ProfileRepository profileRepository) {
+    private final UserRepository userRepository;
+    public ProfileCommandServiceImpl(ProfileRepository profileRepository, UserRepository userRepository) {
         this.profileRepository = profileRepository;
+        this.userRepository = userRepository;
     }
     @Override
     public Optional<Profile> handle(CreateProfileCommand command) {
-
+        User user = userRepository.findById(command.userId()).orElseThrow(() -> new IllegalArgumentException("User with id " + command.userId() + " does not exist"));
         Email email = new Email(command.email());
         if (profileRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Profile with email " + command.email() + " already exists");
         }
-
-        var profile = new Profile(command);
+        // Check if the user already has a profile
+        if (profileRepository.existsByUserId(command.userId())) {
+            throw new IllegalArgumentException("User with id " + command.userId() + " already has a profile");
+        }
+        var profile = new Profile(command, user);
         profileRepository.save(profile);
         return Optional.of(profile);
     }
