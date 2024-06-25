@@ -1,10 +1,7 @@
 package com.acme.hormonalcare.backend.profile.application.internal.queryservices;
 
 import com.acme.hormonalcare.backend.profile.domain.model.aggregates.Profile;
-import com.acme.hormonalcare.backend.profile.domain.model.queries.GetAllProfilesQuery;
-import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByEmailQuery;
-import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByIdQuery;
-import com.acme.hormonalcare.backend.profile.domain.model.queries.GetProfileByNameQuery;
+import com.acme.hormonalcare.backend.profile.domain.model.queries.*;
 import com.acme.hormonalcare.backend.profile.domain.services.ProfileQueryService;
 import com.acme.hormonalcare.backend.profile.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +34,10 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     @Override
     public Optional<Profile> handle(GetProfileByEmailQuery query) {
         return profileRepository.findByEmail(query.email());
+    }
+
+    @Override
+    public boolean doesProfileExist(GetProfileByUserIdQuery query) {
+        return profileRepository.existsByUserId(query.userId());
     }
 }
